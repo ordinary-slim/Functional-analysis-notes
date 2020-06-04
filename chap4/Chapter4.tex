@@ -1,0 +1,467 @@
+%--------------------------------------------------
+\title{\large Notes for chapter 4 of Applied Function Analysis\\\huge Topology, through filters}
+\date{\vspace{-5ex}}
+\input{../latexHeader_noteTaking.tex}
+\begin{document}
+\maketitle
+\tableofcontents
+\pagebreak
+\section*{Introduction}\label{sec:intro}
+\addcontentsline{toc}{section}{Introduction}
+Chapter starts with a discussion about the equivalence of concepts in mathematics:
+\begin{myeg}{Equivalence relations and partitions are conceptually equivalent}
+	\begin{itemize}
+		\item An equivalence relation \tilde{} \textit{induces} a partition $\mathcal{P}$, i.e., there exists a natural mapping from equivalence relations to partitions. The induced partition is the family of equivalence classes of \tilde{}. Call it $f$ for a second.
+		\item Viceversa from the other side. The induced equivalence relation is described as
+			$$x\sim y \iff \textrm{x and y belong to the same partition} $$
+		Call it $g$ for 2 seconds.
+		\item $g\circ f = Id_\sim$
+		\item $f\circ g = Id_{\mathcal{P}}$
+	\end{itemize}
+\end{myeg}
+
+Author goes on to describe how topology can be introduced from a bunch of different (but equivalent) concepts, \textit{a savoir} : open \& closed sets, the interior/closure of a set, neighborhoods of points. Author chooses \textit{neighborhoods of points}.\par
+\pagebreak
+\section{Basic notions}
+We start out by defining the equivalence relation $\succ$ on the power set $\mathcal{P}(X)$ : for 2 families of subsets of X, $\mathcal{A} \enspace \& \enspace \mathcal{B}$,
+$$\mathcal{A}\succ \mathcal{B} \iff \forall B\in\mathcal{B} \quad \exists A\in \mathcal{B}: A\subset B $$
+It is said that $\mathcal{A}$ is stronger than $\mathcal{B}$ If we also have $\mathcal{B}\succ \mathcal{A}$, $\mathcal{A} \enspace \& \enspace \mathcal{B}$ are \textit{equivalent}.\\
+\begin{mydef}{Bases and filters}{basefilter}
+	A non-empty class $\mathcal{B}$ is called a \textbf{base} iff
+	\begin{enumerate}
+		\item $\emptyset\notin \mathcal{B}$
+		\item $\forall A, B \in \mathcal{B}, \enspace \exists C\in \mathcal{B} : C \subset A \cap B$
+	\end{enumerate}
+	A non-empty class of sets $\mathcal{F}$ is called a \textbf{filter} iff
+	\begin{enumerate}
+		\item $\emptyset\notin \mathcal{F}$
+		\item $\forall A, B \in \mathcal{F}, \thinspace C = A\cap B\in \mathcal{F}$
+			\item All supersets of an element are contained, i.e. $A\in \mathcal{F}, A\subset D \implies D \in \mathcal{F}$
+	\end{enumerate}
+	\tcblower
+	Every filter is a base. We define the filter \textit{generated} by base $\mathcal{B}$ as
+	$$C\in \mathcal{F} \iff \exists B \in \mathcal{B} : B\subset C$$
+	We call $\mathcal{F}$ the \textit{filter of base} $\mathcal{B}$.
+\end{mydef}
+\begin{myeg}{}
+	Consider $X=\{1, 2, 3, 4\}$
+	\begin{itemize}
+		\item $\mathcal{B}_1=\{ \{1\}, \{1, 2\}, \{1, 2, 3\} \}$ is a base.
+		\item $\mathcal{B}_2=\{ \{1\}\}$
+
+		\item $\mathcal{F}(\mathcal{B}_1) = \mathcal{F}( \mathcal{B}_2 ) =\{\{2\}, \{1, 2\}, \{2, 3\}, \{2, 4\}, \{1, 2, 3\}, \{2, 3, 4\}, \{1, 2, 3, 4\}\} $
+	\end{itemize}
+\end{myeg}
+\begin{myprop}{}{equfilt}
+	Let $ \mathcal{B}, \mathcal{C}$ denote two bases
+	$$ \mathcal{B}\succ \mathcal{C} \iff \mathcal{F}(\mathcal{B}) \supset \mathcal{F}( \mathcal{C}) $$
+	Moreover, $\mathcal{B} \enspace \& \enspace \mathcal{C}$ are \textit{equivalent} with respect to $\succ$ iff $\mathcal{F}(\mathcal{B}) = \mathcal{F}( \mathcal{C})$ .
+\end{myprop}
+\begin{myproof}
+	Consider $M\in \mathcal{F}( \mathcal{B} )$. By definition, $\exists B \in \mathcal{B} \suchthat{} B \subset M$. \quad $\mathcal{C} \succ  \mathcal{B} \implies \exists C \in \mathcal{C} \suchthat{} C~\subset~B~\subset~M \implies M \in \mathcal{F}( \mathcal{C} )$ 
+\end{myproof}
+
+The classical approach consists in \textit{introducing a topology from open sets}:
+\begin{mydef}{Open sets}{open}
+	Consider a class $\mathcal{T}\subset \mathcal{P}(X)$ such that
+	\begin{enumerate}[label=\roman*.]
+		\item $\emptyset{} \enspace \& \enspace X \in \mathcal{T}$
+		\item $\bigcup\limits_{U\in \mathcal{T}} U \in \mathcal{T}$ i.e. arbitrary union belongs to $\mathcal{T}$
+		\item $\bigcap\limits_{U\in \mathcal{T}}^{N} U \in \mathcal{T}$ i.e. finite intersection belongs to $\mathcal{T}$
+	\end{enumerate}
+	The elements of $\mathcal{T}$ are called \textbf{open sets}. $\mathcal{T}$ itself is frequently called the topology on X. $(X, \mathcal{T})$ is called a \textit{topological space}.
+\end{mydef}
+
+Another approach is to \textit{introduce the topology through neighborhoods}
+\begin{mydef}{Neighborhoods}{nghb}
+	For each $x\in X$, consider a filter $\mathcal{F}_{x}$ such that
+	\begin{enumerate}[label=\roman*.]
+		\item $\forall Y \in \mathcal{F}_{x}, x \in Y \enspace$
+		\item $A, B \in \mathcal{F}_x \implies \quad A \cap B \in F_x$
+		\item For each element, its supersets are contained aswell.
+		\item $A \in \mathcal{F}_x \implies \quad \mathring{A} := \{z \in A : A\in \mathcal{F}_x\} \in \mathcal{F}_x$ i.e. the \textit{interior of A} also belongs to $\mathcal{F}_x$
+	\end{enumerate}
+	The elements of $\mathcal{F}_x$ are called \textbf{\textit{neighborhoods of x}}. The mapping
+	\begin{align*}
+		\mathcal{T} : X &\to \mathcal{P}(X)\\
+			 x &\mapsto \mathcal{F}_x
+	\end{align*}
+	is referred to as \textit{a topology on X}, and $(X, \mathcal{T})$ is referred to as a \textit{topological space}. Let us now explicitly define the \textbf{interior operation} referred to in property \textit{iv}. Consider $A \subset X$ :
+	\begin{itemize}
+		\item A point \textit{x} is an \textbf{interior point} of \textit{A} iff$A \in \mathcal{F}_x$
+		\item Set of interior points of \textit{A, aka} \textbf{interior of set} \textit{A} \enspace: $ \text{int} A := \{y\in A : A\in \mathcal{F}_y\} \big(= \mathring{A} big)$
+	\end{itemize}
+	\tcblower
+	We could have started the previous construction from a base and generated the previous filter from there, in the following fashion: let $\mathcal{B}_x$ be a class such that:
+	\begin{enumerate}[label = \roman*.]
+		\item $\forall A \in \mathcal{B}_x, x\in A$
+		\item $\forall A, B \in \mathcal{B}_x, \enspace \exists C \in \mathcal{B}_x \enspace \mid \enspace C \subset A \cap B$
+		\item $\forall B \in \mathcal{B}_x, \enspace \exists C \in \mathcal{B}_x \enspace \mid \enspace \forall y\in C, \enspace \exists D \in \mathcal{B}_y \enspace \mid \enspace D \subset B$
+	\end{enumerate}
+	This base is called \textit{base of neighborhoods of x}.
+\end{mydef}
+\begin{mystatement}
+	A \textit{base of neighborhoods of x} indeed generates a filter of \textit{neighborhoods of x}. 
+\end{mystatement}
+\begin{myproof}
+	The first two conditions define a base, thus $\mathcal{F}( \mathcal{B}_x )$ has the first three properties of $\mathcal{F}_x$. We will show that property \textit{iii} of $\mathcal{B}_x$ is equivalent to $\mathcal{F}( \mathcal{B}_x )$ having property \textit{iv} of $\mathcal{F}_x$
+	\begin{gather*} 
+		\forall B \in \mathcal{B}_x, \enspace \exists C \in \mathcal{B}_x \enspace \mid \enspace \forall y\in C, \enspace \exists D \in \mathcal{B}_y \enspace \mid \enspace D \subset B \\
+		\big\Updownarrow\\
+		\forall B \in \mathcal{B}_x, \enspace \exists C \in \mathcal{B}_x \enspace \mid \enspace \forall y\in C, B \in \mathcal{F}(\mathcal{B}_y)\\
+		\big\Updownarrow\\
+		B \in \mathcal{B}_x \implies \mathring{B} := \{y \in B : B \in \mathcal{F}( \mathcal{B}_y )\} \in \mathcal{F}( \mathcal{B}_x )\\
+		\big\Updownarrow^{1}\\
+		A \in 	\mathcal{F}( \mathcal{B}_x) \implies \mathring{A} := \{y \in A : A \in \mathcal{F}( \mathcal{B}_y )\} \in \mathcal{F}( \mathcal{B}_x )
+	\end{gather*}
+	${}^{1} \Downarrow$ follows immediately from $ \mathcal{B}_x \subset \mathcal{F}( \mathcal{B}_x)$. $\Uparrow$ follows from $B \subset A \implies \mathring{B} \subset \mathring{A}$
+\end{myproof}
+\noindent \rule[1mm]{\textwidth}{0.4pt}
+Our goal in the next few lines is to show that the \textit{filter topology} and the \textit{open set topology} are mathematically equivalent concepts, in the sense of the introductory discussion. We shall construct an \textit{open topology} starting from neighborhoods, a \textit{filter topology} starting from open sets \& show that by going forth and forth again we return to our starting point.
+\begin{mydef}{Alternative definitions of open sets \& neighborhoods}{altbuteq}
+	\textbf{Neighborhoods, from open sets} : Let $(X, \mathcal{T}^o)$ be a space with an open set topology. Consider an arbitrary point $x\in X$. The \textit{base of open neighborhoods} is defined as follows
+	$$\mathcal{B}_x^o := \{U \in \mathcal{T}^o \enspace \mid \enspace x \in U\}$$
+	\textit{Neighborhoods of x} are defined as the elements of the $\mathcal{F}( \mathcal{B}_x^o)$.
+	\tcblower
+	\textbf{Open sets, from neighborhoods} : Let $(X, \mathcal{T}^f)$ be a space with a filter topology. $U$ is an \textit{open set} iff $U = \textrm{int } U$
+\end{mydef}
+Let us check that these definitions are compatible with the previous ones:
+\begin{itemize}
+	\item $\mathcal{B}_x^o$ (definition \ref{def:altbuteq}) is a base of neighborhoods of x (definition \ref{def:nghb}):
+	\begin{itemize}
+		\item $\mathcal{B}_x^o$ is a base (i.e. $\mathcal{F}( \mathcal{B}_x^o )$ is a filter) : by definition of $\mathcal{B}_x^o$ and open sets, $x$ is an element of all members of $\mathcal{B}_x^o$ and the intersection of members is also a member. \hfill \done
+		\item By definition of $\mathcal{B}_y^o$, $\forall B \in \mathcal{B}_x^o, \enspace \forall y \in B, \enspace B\in \mathcal{B}_y^o$\quad (\textit{iff} $B = \mathring{B}$) \hfill \done
+	\end{itemize}
+	\item The set $\mathcal{T} = \{U \subset X \enspace \mid \enspace U = \textrm{int } U\}$ (definition \ref{def:altbuteq}) forms an open topology (definition \ref{def:open}):
+	\begin{itemize} 
+		\item $\emptyset{}, X \in \mathcal{T}$ : both sets are neighborhoods of all their points. \hfill \done
+		\item $\bigcup\limits_{U\in \mathcal{T}} U \in \mathcal{T}$ : each $U$ is a neighborhood of all its points \& the union is a superset of each $U$. \hfill \done
+		\item $\bigcap\limits^{N}_{U\in \mathcal{T}} U \in \mathcal{T}$ : by induction from the second property of filters. \hfill \done
+	\end{itemize}
+\end{itemize}
+It only remains to check whether by going forth and forth we return to our starting point:
+\begin{myprop}{}{}
+	Let $(X, \mathcal{T}^o)$ be a topological space furnished with an open topology. Then
+	$$\mathcal{T}^o = \mathcal{T}^{o^{f^o}} \big(:= \{\textrm{Collection of open sets induced by } \mathcal{F}( \mathcal{B}_x^o)\}\big)$$
+\end{myprop}
+\begin{myproof} 
+	\begin{itemize}
+		\item $\subset$ : Let $U\in \mathcal{T}^o$. By definition \ref{def:altbuteq}, $U \in \mathcal{T}^o \implies U \in \mathcal{B}_x^o \enspace \forall x \in U$. That is, $U = \textrm{int } U$. This implies $U \in \mathcal{T}^{o^{f^o}}$
+		\item $\supset$ : Let $V\in \mathcal{T}^{o^{f^o}}$. $V = \textrm{int }V \iff V \in \mathcal{F}_x \enspace \forall x \in V \iff \enspace \forall x \in V \enspace \exists B_x \in \mathcal{B}_x^o \enspace \mid \enspace x \in B_x \subset V$. We can write $V$ as the union of such sets, which are open in $\mathcal{T}^o$. Thus $V$ is open in $\mathcal{T}^o$.
+	\end{itemize}
+\end{myproof}
+\begin{myprop}{}{}
+	Let $(X, \mathcal{T}^f)$ be a topological space equipped with a filter topology. Then
+	$$\mathcal{T}^f = \mathcal{T}^{f^{o^f}} \big(:= \textrm{Mapping } x \mapsto \mathcal{F}_x \big)$$
+\end{myprop}
+\begin{myproof} 
+	We show that $\mathcal{B}_x \sim \mathcal{B}_x^\textrm{induced}$ in the sense of $\succ$: 
+	\begin{itemize}
+		\item $\succ$ : Let $B\in \mathcal{B}_x$. We use the fact that $\textrm{int } B = \textrm{int int } B$ : int $B \in \mathcal{B}_x^o \enspace \& \enspace \textrm{int } B \subset B$
+		\item $\prec$ : Let $B'\in \mathcal{B}_x^o$. $B'\in \mathcal{B}_x^o \implies B' \in \mathcal{T}^{f^o} \implies \textrm{int } B' = B'$. In particular, $B'$ is a neighborhood of \textit{x} i.e. $B' \in \mathcal{F}_x \iff \exists B \in \mathcal{B}_x \enspace \mid \enspace B \subset B'$
+	\end{itemize}
+	Thus $\mathcal{B}_x \sim \mathcal{B}_x^\textrm{induced} \iff \mathcal{F}_x = \mathcal{F}_x^{\textrm{induced}}$ by proposition \ref{prop:equfilt}.
+\end{myproof}
+We conclude that both approaches are equivalent. We can set sail on the path of filters without looking back.
+\begin{myprop}{Properties of the interior operation}{intproperties}
+	\begin{enumerate}[label=\roman*.]
+		\item int int $A =$ int $A$
+		\item int ($A \cap B$) = int $A \cap \textrm{int } B$  
+		\item int $(A \cup B) \supset \textrm{int } A \cup \textrm{int } B$
+		\item $A \subset B \implies \textrm{int } A \subset \textrm{int } B$
+	\end{enumerate}
+\end{myprop}
+\begin{myproof}
+	\begin{enumerate}[label=\roman*]
+		\setcounter{enumi}{3}
+		\item : $\forall x \in \textrm{int } A, \enspace B \supset A \in \mathcal{F}_x$ i.e. neighbourhood $A$ is such that $x \in A \subset B \implies x \in \textrm{int } B$
+		\setcounter{enumi}{0}
+		\item : $\subset$ follows from \textit{iv}. Consider $x \in \textrm{int } A$. $A$ is a neighbourhood of $x$ $\iff$ $\textrm{int } A$ is a neighbourhood of $x$ $\iff x \in \textrm{int int } A$
+		\item : $\subset$ follows from \textit{iv}. Consider $x\in \textrm{int } A \cap \textrm{int } B$. $A, B \in \mathcal{F}_x \iff A\cap B \in \mathcal{F}_x \iff \textrm{int }(A\cap B) \in \mathcal{F}_x$
+		\item : $\supset$ follows from \textit{iv}.
+	\end{enumerate}
+\end{myproof}
+\begin{myremark}
+	The interior of a set corresponds to the biggest open set contained inside of him i.e.
+	$$\textrm{int } A = \bigcup_{\substack{U\in \mathcal{T}^o \\ U \subset A}} U$$
+	\iffalse
+	\begin{myproof}
+		\begin{itemize}
+			\item $\supset : \enspace \forall U, U \subset A \implies \textrm{int } U = U \subset \textrm{int } A$
+			\item $\subset : \enspace \textrm{int } A $ is itself open.
+		\end{itemize}
+	\end{myproof}
+	\fi
+\end{myremark}
+\begin{myeg}{Equivalent bases in $\mathbb{R}^n$}
+	Define the bases $\mathcal{B}_x$ as the collection of open balls centered at \textit{x}. They define the \textit{fundamental topology} in $\mathbb{R}^n$. Note that the following bases are equivalent to it
+	\begin{itemize}
+		\item Open balls with radii $\frac{1}{n}$
+		\item Closed balls centered at \textit{x}
+		\item Open balls defined by the $L^1$ norm or any other $L^p$ norm, $p\in \mathbb{N}$
+	\end{itemize}
+\end{myeg}
+\begin{myeg}{Discrete \& trivial topologies}
+	Let X be an arbitrary set.
+	\begin{itemize}
+		\item If we use as a base the \textit{singletons} $\{x\}$, every \textit{x} is mapped to $\mathcal{P}(x) \big( \textrm{that is, }\mathcal{F}_x = \mathcal{P}(x) \big)$. This topology is dubbed \textit{discrete toplogy}.
+		\item If we use as a base \textit{X}, every \textit{x} is mapped to $\{X\} \big( \textrm{that is, }\mathcal{F}_x = \{X\}\big)$. This topology is dubbed \textit{trivial toplogy}.
+	\end{itemize}
+	These are respectively the \textit{strongest} and \textit{weakest} topologies.
+\end{myeg}
+\begin{mydef}{Accumulation points, closure of a set, closed set \& dense set}{closeddef}
+	Consider a topological space $(X, \mathcal{T}^f)$ and $A\subset X$
+	\begin{itemize}
+		\item $x$ is an \textbf{accumulation point} of $A$ iff $\forall N \in  \mathcal{F}_x, (N\cap A)\setminus \{x\} \neq \emptyset{} $
+		\item \textbf{Closure} of $A, \enspace \overline{A} := A \cup \hat{A}$, where $\hat{A}$ denotes the set of accumulation points of $A$
+		\item A set $C \subset X$ is \textbf{closed} if it corresponds to its own closure i.e. $C = \overline{C}$
+		\item A set $D \subset X$ is said to be \textbf{dense in X} iff
+		$ \overline{D} = X $
+	\end{itemize}
+\end{mydef}
+\begin{mystatement} 
+	A set is closed iff its complement is open.
+\end{mystatement}
+\begin{myproof}
+\begin{equation*}
+	\begin{cases} 
+		x \notin C\\
+		\textrm{C closed}
+	\end{cases}
+	\iff
+	\begin{cases} 
+		x \notin C\\
+		x \notin \hat{C}
+	\end{cases}
+	\iff
+	\begin{cases} 
+		x \notin C\\
+		\exists N \in \mathcal{F}_x  \enspace \mid \enspace N\cap C \setminus \{x\} = \emptyset{}
+	\end{cases}
+	\iff
+\end{equation*}
+\begin{equation*}
+	\iff
+	\exists N \in \mathcal{F}_x  \enspace \mid \enspace N\cap C = \emptyset{}
+	\iff
+	\exists N \in \mathcal{F}_x  \enspace \mid \enspace N \subset C'
+	\iff
+	C' \in \mathcal{F}_x 
+	\iff
+	\begin{cases} 
+		x \in C' \\
+		\textrm{C' open}
+	\end{cases}
+\end{equation*}
+\end{myproof}
+\begin{myprop}{Properties / Definition of closed sets}{closedprop}
+	As always, these properties can be taken as a definition and will induce a topology.
+	\begin{itemize}
+		\item $\emptyset{}, X$ are closed.
+		\item Finite union of closed sets is closed.
+		\item Arbitrary intersection of closed sets is closed.
+	\end{itemize}
+\end{myprop}
+\pagebreak
+\section{Topological subspaces \& product topologies}\label{sec:subtopprodtop}
+\begin{mydef}{Subspace topology}{subspacetopology}
+	A topological space $(X, \mathcal{T})$ induces a topology on its subsets $Y \subset X$
+	$$\forall x \in Y, \enskip B \in \mathcal{B}_x^Y \iff B =B' \cap Y, \enspace B' \in \mathcal{B}_x$$
+	Subset $Y$ is said to have some topological property iff $(X, \mathcal{T}\big|_Y )$ possesses said property.
+\end{mydef}
+\begin{myprop}{}{}
+	Let $Y \subset X$ a topological subspace \& $E$ a subset of Y :
+	\begin{itemize}
+		\item The closure of $E$ in $\mathcal{T}\big|_Y$ is $\overline{E} \cap Y$
+		\item $U$ is open in $\mathcal{T}\big|_Y \iff U = V \cap Y, \enspace V \in \mathcal{T}$ 
+		\item $F$ is closed in $\mathcal{T}\big|_Y \iff F = C \cap Y, \enspace C \textrm{closed in } \mathcal{T}$
+	\end{itemize}
+\end{myprop}
+
+\begin{mydef}{Product topology}{producttopology}
+	Consider two topological spaces, $X, Y$. Their respective topologies induce a topology on $X \times Y$
+	$$\mathcal{B}_{(x, y)} :=  \{B\times B' \enspace \mid \enspace B \in \mathcal{B}_x^X,  \enspace B' \in \mathcal{B}_y^Y\}$$
+	Note that things work differently for infinite cartesian products. In words, the product topology is the \textbf{coarsest} topology for which all the projections are continuous.
+\end{mydef}
+
+\begin{myprop}{}{}
+	\begin{itemize}
+		\item $U \in \mathcal{T}_X, \enspace V \in  \mathcal{T}_Y \iff U \times V \in \mathcal{T}^*$ 
+		\item $C \textrm{ closed in } \mathcal{T}_X, \enspace V \textrm{ closed in }  \mathcal{T}_Y \iff U \times F \textrm{ closed in } \mathcal{T}^*$ 
+	\end{itemize}
+\end{myprop}
+
+\pagebreak
+\section{Continuity and compactness}\label{sec:contcomp}
+\begin{mydef}{Continuous function}{continuousfunction}
+	Let $X, Y$ be two topological spaces and let $ f : X \to Y $ be a function. A function is continuous at $x \in X$ iff
+	$$ f ( \mathcal{B}_x ) \succ  \mathcal{B}_{f(x)} \iff f ( \mathcal{F}_x ) \succ  \mathcal{F}_{f(x)} $$ 
+	If $f$ is continuous $\forall x \in X$, $f$ is \textit{globally} continuous. 
+\end{mydef}
+\begin{myprop}{Statements regarding continuity}{continuitystatements}
+	Let $X, Y, Z$ be topological spaces. Let $f : X \to Y, \enspace g : Y \to Z, \enspace h : X \to V$ be a bunch of functions: 
+	\begin{enumerate}[label = \roman*.]
+		\item $f$ is globally continuous $\iff \forall G \textrm{ open in } \mathcal{T}_Y, \enspace f^{-1} (G) \textrm{ open in } \mathcal{T}_X $
+		\item $f$ is globally continuous $\iff \forall C \textrm{ closed in } \mathcal{T}_Y, \enspace f^{-1} (C) \textrm{ closed in } \mathcal{T}_X $
+		\item $f$ is continuous at $x$, $g$ is continuous at $f(x) \implies g \circ f$ continuous at $x$
+		\item $f$ is continuous at $x$, $h$ is continuous at $x \implies (f,\hspace{1mm} h) $ continuous at $x$
+			\begin{align*}
+				(f, \hspace{1mm} h) : X &\to Y \times V\\
+					 x &\mapsto (f(x), \hspace{1mm} h(x))
+			\end{align*}
+		\item Consider the functions $F : A \to B, \enspace G : C \to D$
+			$$F \textrm{ is continuous at } x\in A, \enspace G \textrm{ is continuous at } y\in B \implies F\times G \textrm{ is continuous at } (x, y)$$
+	\end{enumerate}
+\end{myprop}
+\begin{myproof}
+	\begin{itemize}
+		\item i, $\Rightarrow$ : Let $U$ be an open set in the codomain. If there is no $x \in X$ such that $f(x) \in U, \enskip f^{-1}(U) = \emptyset{}$, which is open by definition. \enskip Else, $\exists x \enspace \mid \enspace f(x) \in U$. \enskip Because $U$ is open, it is a neighborhood of all its points and in particular $f(x)$. By continuity, there exists a neighborhood $N \in \mathcal{F}_x \enspace \mid \enspace f(x) \in f(N) \subset U$. We exploit the fact that $N \subset f^{-1}(f(N))$
+			$$x \in N \subset f^{-1}(U)$$
+		\item i, $\Leftarrow$ : Let $N\in \mathcal{F}_{f(x)}$. \enskip $\textrm{int } N$ is a open $f(x) \implies f^{-1}(\textrm{int } N)$ is open $\implies f^{-1}(\textrm{int } N) $ is a neighborhood of $x$ such that
+		$$f(f^{-1}(\textrm{int } N)) \subset N$$
+		We used the fact that the image of the preimage is contained in the original set.
+		\item ii $\Leftrightarrow$ iii : The equivalence follows immediately from $f^{-1}(A \setminus B) = f^{-1}(A)\setminus f^{-1}(B)$ and the complement characterizations of open \& closed sets.
+		\item iii : Consider a neighborhood of $f \circ g (x), \enskip L$. \enskip By continuity of $f, \enspace \exists$ a neighborhood of $g(x), \enskip M \enspace \mid \enspace f(M) \subset L$. By continuity of $g, \enspace \exists $ a neighborhood of $x, \enskip N \enspace \mid \enspace g(N) \subset M$. \enskip Thus, $f(g(N)) \subset L \enspace \& \enspace f \circ g \thinspace (\mathcal{F}_x) \succ \mathcal{F}_{f \circ g \thinspace (x)}$
+		\item iv : Consider a neighborhood of $(f(x), h(x)) \in Y \times V, \enskip A\times B$. \enskip By definition of the product topology, $A \enspace \& \enspace B $ are neighborhoods of $f(x), \enskip h(x) $, respectively. \enskip By continuity of $f \enspace \& \enspace h, \enspace \exists M, N \in \mathcal{F}_x \enspace \mid \enspace f(M) \subset A, \enskip h(N) \subset B$. \enskip Thus $N \cap M \in \mathcal{F}_x \enspace \& \enspace (f, h) \thinspace (N \cap M) \subset A \times B$
+		\item v : Consider a neighborhood of $F \times G \thinspace (x, y), \enskip L \times K$. \enskip By definition of the product topology, $L \in \mathcal{F}_{F(x)} \subset A, \enskip K \in \mathcal{F}_{G(y)} \subset C$. \enskip By continuity of $F \enspace \& \enspace G, \enspace \exists M \in \mathcal{F}_x, \thinspace N\in \mathcal{F}_y \enspace \mid \enspace F(M) \subset L, \enskip G(N) \subset K$. \enspace By definition of the product topology, this time from the domain's point of view, $M \times N\in \mathcal{F}_{F\times G \thinspace (x, y)}$
+	\end{itemize}
+\end{myproof}
+
+
+\begin{mydef}{Hausdorff spaces}{hausdorff}
+	A topological space $(X, \mathcal{T})$ is said to be \textbf{Hausdorff} iff 
+	$$ \forall x, y \in X, \enspace \exists N \in \mathcal{F}_x, \enspace M \in \mathcal{F}_y \enspace \mid \enspace N \cap M = \emptyset{}  $$
+	It is a topological property.
+\end{mydef}
+\begin{mydef}{Compact spaces}{compact}
+	A topological space $(X, \mathcal{T})$ is said to be \textbf{compact} iff
+	\begin{itemize}
+		\item $X$ is Hausdorff
+		\item Every open covering has a finite subcovering.
+	\end{itemize}
+	It is a topological property.\\[1mm]
+	An indexed collection of subsets of $X, \enspace \mathcal{A} = \{A_i, \thinspace i\in I\}$, has the \textbf{finite intersection property} (FIP) iff any finite subcollection $J\subset I$ has a non-empty intersection i.e.$\bigcap\limits_{i \in J} A \neq \emptyset$
+	\tcblower
+	Let $\mathcal{B}$ be a base. \textit{x} is a \textbf{limit point} of $\mathcal{B}$ iff
+	$$x \in \bigcap_{B\in \mathcal{B}} \overline{B}$$
+	\textit{NB} : Nobody else calls this \textit{limit point}.
+\end{mydef}
+\begin{myprop}{Characterization of compactness}{fipcompactness}
+	Let \textit{X} be a Hausdorff space. The following statements are equivalent.
+	\begin{enumerate}[label=\roman*.]
+		\item Every open covering has a finite subcovering.
+		\item Every base has a limit point.
+		\item Every collection of closed sets with the FIP has a non-empty intersection.
+	\end{enumerate}
+\end{myprop}
+
+\begin{myproof}
+	\begin{itemize}
+		\item i $\Rightarrow$ ii : Consider a base $\mathcal{B} \subset \mathcal{P}(X)$. \enskip The collection of the closures of the elements of $\mathcal{B}$, is also a base. \enskip Assume by contradiction that $\mathcal{B}$ has no limit point i.e.
+		$$\bigcap_{\mathcal{B}} \overline{B} = \emptyset \iff \bigcup_{\mathcal{B}} X \setminus \overline{B} = X$$
+		In words, the complements form an open covering. By i, there exists a finite subcovering $\mathcal{V}\subset \mathcal{B}, \enskip |\mathcal{V}| < \infty$ such that
+		$$\bigcup_{ \mathcal{V}} X \setminus \overline{B} = X \iff \bigcap_{ \mathcal{V}} \overline{B} = \emptyset{} $$
+		We have both that $\{\overline{B}, B \in \mathcal{B}\}$ is a base and that there is an empty finite intersection of elements. $\bot$
+
+		\item ii $\Leftarrow$ i  : Consider an open covering $\mathcal{U}$. Assume by contradiction that there is no finite subcovering i.e.
+			$$\forall \mathcal{V} \subset \mathcal{U} \enspace \mid \enspace  |\mathcal{V}| < \infty, \enskip \bigcup_{ \mathcal{V}} U \neq X \iff \bigcup_{ \mathcal{V}} X \setminus U \neq \emptyset{}$$
+		In words, for any finite subcollection, the intersection of the complements is non-empty. The complements thus qualify to form a base. By ii, their intersection is non-empty i.e.
+		$$\bigcap_{ \mathcal{U}} X \setminus U \neq \emptyset{} \iff \bigcup_{ \mathcal{U}} U \neq X$$
+		We both have that $\mathcal{U}$ is a covering and that it is not a covering, $\bot$
+		\item iii $\Rightarrow$ ii : A base is a collection of sets with the FIP, meaning the closures of its elements is a collection of closed sets with the FIP.
+		\item iii $\Leftarrow$ i : Consider a collection of closed sets with the FIP, $\mathcal{C} \subset \mathcal{P}(X)$. Assume by contradiction that their intersection is empty
+		$$\bigcap_{ \mathcal{C}} C = \emptyset{} \iff \bigcup_{ \mathcal{C}} X \setminus C = X$$
+		The collection of the complements is an open covering meaning there is a finite subcovering. Like in the first proof, this contradicts the FIP property.
+	\end{itemize}
+\end{myproof}
+\begin{myprop}{Statements about compacity}{compacitystatements}
+	\begin{enumerate}[label = \roman*.]
+		\item Every compact set is closed.
+		\item Every closed subset of a compact set is compact.
+		\item Cartesian products of compact sets are compact.
+		\item Let $f : X \to Y$ be a continuous function with \textit{X} compact. Then $f(X)$ is also compact.
+	\end{enumerate}
+\end{myprop}
+\begin{myproof}
+	\begin{enumerate}[label = \roman*.]
+		\item Consider $K \subset X$ compact. Let \textit{x} be an accumulation point of $K$ and assume by contradiction that it is not contained in $K$. \enskip Because the space is Hausdorff
+			$$\forall y \in K, \enskip \exists N_{y} \in \mathcal{F}_y, \thinspace M_{y} \in \mathcal{F}_x \enspace \mid \enspace \textrm{ int } N_y \cap M_y \subset N_y \cap M_y = \emptyset{}$$
+			The collection $\{\textrm{ int } N_y, \thinspace y \in K\}$ is an open covering of $K$. By compactness, we can extract a finite subcovering of $K$, defined by some finite indexing set $I$
+			$$\bigcap_{I} M_{y_i} \cap K \subset \bigcap_{I} M_{y_i} \cap \bigcap_{I} N_{y_i} = \bigcap_{I} M_{y_i} \cap N_{y_i} = \emptyset{}$$
+			We both have that $x$ is an accumulation point and that the neighborhood $\bigcap\limits_{I} M_{y_i}$ does not intersect $K$, \thinspace $\bot$
+		\item We use the FIP characterization of compacity : consider a collection of closed sets in $F \subset X$, $\mathcal{C}$ with the FIP. The subset topology dictates that
+			$$\forall C \in \mathcal{C}, \enskip C = C' \cap F$$
+		Thus the elements of $\mathcal{C}$ are also closed in $X$ and by compacity of $X$ their intersection is non-empty.
+		\item Skipped
+		\item Consider an open covering of $f(X), \thinspace \mathcal{U}$. \thinspace By continuity, $\{f^{-1}( U ), U \in \mathcal{U}\}$ is a collection of open sets. It is also an open covering of $X$. By compacity of $X$, there exists a finite indexing set $I$ such that
+		$$ \bigcup_{i \in I} f^{-1} ( U_i ) = f^{-1} ( \bigcup_{i \in I} U_i ) = X \iff \bigcup_{i \in I} U_i \supset f(X)$$
+		i.e. $I$ defines a finite subcovering of $f(X)$
+	\end{enumerate}
+\end{myproof}
+
+\begin{mythm}{Heine-Borel}{heineborel}
+	A set $E \subset \mathbb{R}$ is compact iff it is closed \& bounded.
+\end{mythm}
+\begin{myproof}
+	\begin{itemize}
+		\item $\Rightarrow$ : By proposition \ref{prop:compacitystatements}, we only need to prove that compacity in $\mathbb{R}$ implies boundedness. Consider $K \subset \mathbb{R}$ compact. Assume by contradiction that it is not bounded. Without loss of generality assume $K$ has no upper bound. The collection $\{[c, \infty[ \cap K, \thinspace c \in \mathbb{N}\}$ forms a base / a collection of closed sets with the FIP. We both have that the intersection of the collection is empty and non-empty, $\bot$
+		\item $\Leftarrow$ : It is sufficient to show that sets of the form $[a, b]$ are compact; closed subsets of compact sets are also compact (proposition \ref{prop:compacitystatements}) and the subset topology inherited from $[a, b]$ is the same as the subset topology inherited from $\mathbb{R}$. \enskip We'll use the limit point characterization of compacity : \par
+		Let $\mathcal{V}$ be a base in $[a, b]$. \enskip Thus $\mathcal{B} = \{B = \overline{V}, \thinspace B \in \mathcal{V}\}$ is also a base. Because the elements of $\mathcal{B}$ are closed, bounded and non-empty, they contain their supremum. We argue now that
+		$$z = \inf_{\mathcal{B}} \max B \in B \quad \forall B \in \mathcal{B}$$
+		By definition of the infimum, \enskip $\forall \epsilon > 0$
+		$$\exists B_\epsilon \in \mathcal{B} \enspace \mid \enspace z + \epsilon > B_\epsilon $$
+		Since $\mathcal{B}$ is a base
+		$$\forall B \in \mathcal{B}, \enskip \exists B' \in \mathcal{B} \enspace \mid \enspace B' \subset B \cap B_\epsilon$$
+		Since $z$ is the infimum of the set of maximums
+		$$z \leq \max B' \leq \max B \cap B_\epsilon \leq \max B_\epsilon < z + \epsilon$$
+		Thus for any $B \in \mathcal{B}$, for any $\epsilon > 0$,
+		$$ ] z - \epsilon, z + \epsilon [ \cap B \neq \emptyset{}$$
+		This implies that $z \in B$ since $B$ is closed. Thus $z$ is a limit point of $\mathcal{B}$
+	\end{itemize}
+\end{myproof}
+
+
+
+
+\pagebreak
+\section{Sequences}\label{sec:sequences}
+\begin{mydef}{Sequences \& convergence}{sequenceconvergence}
+	Let $A$ be an arbitrary set. A \textbf{sequence} is any function $s : \mathbb{N} \to A$. \enspace A \textbf{subsequence} is a sequence derived from deleting some or no elements of a sequence.\\[1mm]
+	Let $A$ be a topological space. A sequence \textbf{converges} to $x \in A$, denoted $x_n \to x$, iff for all neighborhoods $F$ of $x$, $F$ eventually contains the sequence.\\[1mm]
+	Consider again a sequence $x_n$ in a topological space. \textit{x} is an \textbf{accumulation point} of $x_n$ iff all neighborhoods of $x$ contain infinitely many elements of $\{x_n\}$ i.e.
+	$$ \forall F \in \mathcal{F}_x, \enskip \forall N > 0, \enspace \exists n \geq N \enspace \mid \enspace x_n \in F$$
+
+\end{mydef}
+\begin{myeg}{}
+	Consider a sequence $x_n$ in a topological space $X$.
+	\begin{itemize}
+		\item If the topology on $X$ is the trivial one, the sequence converges to all $x \in X$.
+		\item If the topology on $X$ is the discrete one, the sequence converges to $x \iff \exists N \enspace \mid \enspace \forall n>N, \enspace x_n = x $
+	\end{itemize}
+\end{myeg}
+\begin{mystatement} 
+	Let $X$ be a Hausdorff topological space. If a sequence converges in $x$, its limit is unique.
+\end{mystatement}
+\begin{myproof}
+	Assume that $x_n$ converges to two points, $x \neq y$. Then $\exists M \in \mathcal{F}_x, \enspace \exists N \in \mathcal{F}_y \enspace \mid \enspace N\cap M = \emptyset{}$. Eventually, both neighborhoods contain the sequence i.e. their intersection contains the sequence, but their intersection is empty $\bot$
+\end{myproof}
+\begin{mydef}{Bases of countable type \& first countability}{firstcountability}
+	A base is said to be of \textbf{countable type} if it is equivalent (in the sense of $\succ$) to a countable base $\mathcal{C} = \{C_i, \enskip i \in \mathbb{N} \}$
+	\vspace{1mm}
+	\begin{myremark} 
+		Note that $\mathcal{C} \sim \mathcal{D}$, where $\mathcal{D}$ writes
+		$$ \mathcal{D} = \{D_k, \enskip D_k = C_1 \cap C_2 \cap C_3 \cap ... \cap C_k\}$$
+		Notice that $\mathcal{D}$ forms a new countable base of nested basis elements i.e. a base of countable type is equivalent to a base of nested basis elements.
+	\end{myremark}
+	A topological space is said to be \textbf{first countable} iff every point possesses a base of first countable type.
+\end{mydef}
+\begin{mydef}{Sequential properties}{sequentialproperties}
+Consider a topological space $X$ :
+	\begin{itemize}
+		\item A set $G$ is said to be \textbf{sequentially open} iff
+			$$x \in G, \enskip x_n \to x \implies x_n \textrm{ is eventually contained in } G$$
+		\item A set $E$ is said to be \textbf{sequentially closed} iff
+		$$\{x_n\} \subset E, \enskip x_n \to x \implies x \in E$$
+	\end{itemize}
+\end{mydef}
+\end{document}

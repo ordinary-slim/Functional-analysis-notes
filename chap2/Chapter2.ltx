@@ -1,0 +1,479 @@
+\title{\large Notes for chapter 2 of Applied Functional Analysis\\\huge Linear Algebra}
+\date{\vspace{-5ex}}
+\input{../latexHeader_noteTaking.tex}
+\begin{document}
+\maketitle
+\tableofcontents
+\pagebreak
+\section{Basic concepts}\label{sec:conceptvectorspace}
+\subsection{Concept of vector space}
+\begin{mydef}{Vector space}{vectorspace}
+	A \textbf{vector space} over a field $F \text{ with binary operations } + \enspace \& \enspace \cdot$ \enskip, is a set $V$, whose elements are called \textit{vectors}, equipped with a binary operation $\boldsymbol{+}$, called \textit{vector addition}, and a law of composition $*~:~F~\times~V \to V$, called \textit{scalar multiplication}, such that
+	\begin{itemize}
+		\item $(V, \boldsymbol{+})$ is an Abelian group. The identity is often denoted as $\mathbf{0}$
+		\item Compatibility of field multiplication and scalar multiplication : $\alpha * ( \beta * \mathbf{v} ) = (\alpha \cdot \beta) * \mathbf{v}$
+		\item Identity element of scalar multiplication : $1 * \mathbf{v} = \mathbf{v}$, where $1$ is the field multiplication's identity
+		\item $*$ distributes over $\boldsymbol{+} \enspace \& \enspace +$ :
+			$$( \alpha + \beta ) * x = \alpha*x \boldsymbol{+} \beta*x$$
+			$$\alpha*(\mathbf{x} + \mathbf{y}) = \alpha*\mathbf{x} + \alpha*\mathbf{y}$$
+	\end{itemize}
+	\tcblower
+	A nonempty subset $W \subset V$ is called a \textit{linear \textbf{subspace}} iff, with operations restricted from \textit{V}, it is still a vector space. In other words, $W$ is a subspace iff it is closed with respect to both operation : vector addition and scalar multiplication.
+\end{mydef}
+Both these statements are true :
+\begin{enumerate}[label = \roman*.]
+	\item $\mathbf{0} = 0*\mathbf{x}$
+	\item $- \mathbf{x} = -1*\mathbf{x}$
+\end{enumerate}
+\begin{myproof}
+	\begin{enumerate}[label = \roman*.]
+		\item $\mathbf{x} = 1*\mathbf{x} = (1+0)*\mathbf{x} = 1*\mathbf{x} + 0*\mathbf{x} = \mathbf{x} + 0*\mathbf{x} \implies 0*\mathbf{x} = \mathbf{0} $
+		\item $\mathbf{0} = 0*\mathbf{x} = (1 + (-1))*\mathbf{x} = \mathbf{x} + (-1)*\mathbf{x} \implies -\mathbf{x} = -1*\mathbf{x}$
+	\end{enumerate}
+\end{myproof}
+\begin{myeg}{}\label{eg:functionsontovectorspace}
+	Let \textit{V} be a vector space and \textit{E} an arbitrary set. We denote by $V^E$ the set of functions with domain $E$ and image in $V$.
+	Define vector addition and multiplication by a scalar as follows
+	\begin{align*} 
+		(f+g)(x) &:= f(x) + g(x) \\
+		(\alpha f) (x) &:= \alpha f(x)
+	\end{align*}
+\end{myeg}
+Because $V^E$ relies on the vector space structure of $V$, it is a vector space itself.
+\begin{myeg}{}
+	Consider $W_c \subset \mathbb{R}^n$
+	$$W_c = \{\mathbf{x} = (x_1, ..., x_n) \enspace \mid \enspace \sum_{k=1}^{n} \alpha_k x_k = c\}$$
+	Only $W_0$ is a subspace of $\mathbb{R}^n$
+\end{myeg}
+\begin{mydef}{Algebraic sum \& direct sum}{algebraicsumdirectsum}
+	Let $V$ be a vector space. Let $X, Y \subset V$ denote two subspaces of $V$. The \textbf{algebraic sum} of $X \enspace \& \enspace Y$ is defined as follows
+	$$X + Y = \{\mathbf{x} + \mathbf{y} \enspace \mid \enspace x \in X, \enskip y \in Y\}$$
+	It is also a subspace of $V$. Moreover, if $X \cap Y = \{\mathbf{0}\}$, the algebraic sum is denoted as $X \oplus Y$ and called \textbf{direct sum}. If $X \oplus Y = V$, $X \enspace \& \enspace Y$ are each other's \textit{complement}.\\[1mm]
+	Let $\mathbf{z} \in V$. We can also define the algebraic sum of a vector and a subspace $W \subset V$ :
+	$$ \mathbf{z} + W := \{\mathbf{z} + \mathbf{w} \enspace \mid \enspace w \in W\}$$
+	In general, it is not a subspace of $V$
+\end{mydef}
+\begin{mythm}{Unique representation characterization of direct sum}{uniquerepresentation}
+	$$V = X \oplus Y \iff \forall \mathbf{v} \in V, \enskip \exists! \mathbf{x} \in X, \enskip \mathbf{y} \in Y \enspace \mid \enspace \mathbf{x} + \mathbf{y} = \mathbf{v} $$
+\end{mythm}
+\begin{myproof}
+	\begin{itemize}
+		\item $\Rightarrow$ : Consider $\mathbf{v} \in V$. Because $V$ is the algebraic sum of $X, \enskip Y$, it admits a representation. Consider two representation of $\mathbf{v}$:
+			$$\mathbf{v} = \mathbf{x} + \mathbf{y} = \mathbf{x'} + \mathbf{y'}$$
+		$\mathbf{x, x'} \in X, \enskip \mathbf{y, y'} \in Y$. Then
+		$$\mathbf{x' - x} = \mathbf{y' - y} $$
+		Only $\mathbf{0}$ belongs to both subspaces and the two representations are actually the same.
+		\item $\Leftarrow$ : Consider $z \in X \cap Y$. It can be written as :
+			$$ \mathbf{z} = \mathbf{0}^{\in X} + \mathbf{z}^{\in Y} = \mathbf{z}^{\in X} + \mathbf{0}^{\in Y}$$
+		Because $\mathbf{z}$ admits a unique representation, $\mathbf{z = 0}$
+	\end{itemize}
+\end{myproof}
+\begin{myeg}{}\label{eg:quotientspace}
+	Let $V$ be a vector space and $M$ a subspace of $V$. Define the equivalence relation $\sim_M$ on $V$ by
+	$$\mathbf{x} \sim_M \mathbf{y} \iff \mathbf{x} - \mathbf{y} \in M$$
+	The quotient set ${}^V \! / \!_{\sim_M}$
+	$$[\mathbf{x}] = \{\mathbf{y}\in V \enspace \mid \enspace \mathbf{x} - \mathbf{y} \in M\} = \mathbf{x} + M$$
+	can inherit a vector addition and a scalar multiplication from $V$:
+	\begin{align*} 
+		[\mathbf{x}] + [\mathbf{y}] &:= [\mathbf{x} + \mathbf{y}]\\
+		\alpha [\mathbf{x}] &:= [\alpha \mathbf{x}]
+	\end{align*}
+	The quotient space is denoted ${}^V \! / \! {}_M$ and referred to as \textit{quotient space of V modulo M}
+\end{myeg}
+\subsection{Linear dependence and independence, Hamel Basis, Dimension}\label{subsec:lineardependence}
+\begin{mydef}{Linear combination, dependence, independence and span}{linearcombination}
+	Let $V$ be a vector space. Given \textit{k} vectors $\mathbf{x_1}, \mathbf{x_2}, ..., \mathbf{x_k}$ and scalars $\alpha_1, \alpha_2, ..., \alpha_k$, the vector
+	$$\sum_{i=1}^{k} \alpha_i \mathbf{x}_i = \alpha_1 \mathbf{x}_1 + ... + \alpha_k \mathbf{x}_k$$
+	is called a \textbf{linear combination} of the vectors $\mathbf{x}_1, ... \mathbf{x}_k$\\[1mm]
+	We say that vector $\mathbf{x}$ is \textbf{linearly dependent} on vectors $\mathbf{x}_1, ..., \mathbf{x}_k$ iff exists $\alpha_1, \alpha_2, ..., \alpha_k$ such that
+	$$\mathbf{x} = \sum_{i=1}^{k} \alpha_i \mathbf{x}_i $$
+	i.e. exists a linear combination of $\mathbf{x}_1, ..., \mathbf{x}_k$ that results in $\mathbf{x}$. Similarly, a finite set of vectors is linearly dependent if one of them is linearly dependent on the remaining ones. If none of them is, they are called \textbf{linearly independent}. An infinite set is linearly independent iff every finite subset is linearly independent in the previous sense. It is linearly dependent iff there exists a finite subset that is linearly dependent.
+	\tcblower
+	A subset $P \subset V$ is said to \textbf{span} V iff every vector in $V$ can be expressed as a linear combination of vectors from $P$ i.e. for any vector $\mathbf{x}$, there exists a \textit{finite} subset $P_x \subset P$ such that $\mathbf{x}$ is linearly dependent on $P_{\mathbf{x}}$. Mathematically,
+	$$\forall \mathbf{x} \in V, \enskip \mathbf{x} = \sum_{\mathbf{v} \in P_{\mathbf{x}}} \alpha_{\mathbf{v}} \mathbf{v}$$
+\end{mydef}
+\begin{myprop}{Characterization of linear independence}{}
+	The following conditions are equivalent
+	\vspace{1.75mm}
+	\begin{enumerate}[label = \roman*.]
+		\item $\mathbf{x}_1, ..., \mathbf{x}_k$ are linearly independent.
+		\item $\sum\limits_{i=1}^{k} \alpha_i \mathbf{x}_i = \mathbf{0} \iff \alpha_i = 0 \enskip \forall \enspace i = 1, ..., k$ 
+	\end{enumerate}
+\end{myprop}
+
+\begin{myproof}
+	\begin{itemize}
+		\item i $\Rightarrow$ ii : Assume by contradiction that ii does not hold i.e. 
+			$$\sum_{i=1}^{k} \alpha_i \mathbf{x}_i = \mathbf{0} \enskip \land \enskip \alpha_l \neq 0, \enskip 1 \leq l \leq k$$
+		Consequently,
+			$$\sum_{\substack{i=1\\ i\neq l}}^{k} -\frac{\alpha_i}{\alpha_l}\mathbf{x}_i = \mathbf{x}_l$$
+		, which contradicts the linear independence.	
+		\item ii $\Leftarrow$ i : Assume by contradiction that $\mathbf{x}_1, ..., \mathbf{x}_k$ are linearly dependent
+			$$\mathbf{x}_l = \sum_{\substack{i=1\\ i\neq l}}^{k} \alpha_i \mathbf{x}_i \enskip , \enskip 1 \leq l \leq k$$
+		Substracting $\mathbf{x}_l$ from both sides, we obtain a linear combination of $\mathbf{x}_1, ..., \mathbf{x}_k$ which contradicts ii.
+	\end{itemize}
+\end{myproof}
+\begin{mycorollary}{}
+	\begin{enumerate}[label = \roman*.]
+		\item The zero vector can not belong to a set of linearly independent vectors.
+		\item Any subset of linearly independent vectors is itself linearly independent.
+	\end{enumerate}
+\end{mycorollary}
+\begin{mydef}{Hamel Basis}{hamelbasis}
+	Let $V$ be a vector space. A subset $B \subset V$ is called a \textbf{Hamel Basis} iff it is linearly independent and maximal (with respect to the $\subset$ partial ordering).
+\end{mydef}
+
+\begin{myprop}{Characterizations of Hamel Basis}{}
+	Let $V$ be a vector space. The following statements are equivalent
+	\vspace{1.75mm}
+	\begin{enumerate}[label = \roman*.]
+		\item $B \subset V$ is a Hamel Basis of $V$.
+		\item $B$ is linearly independent and spans $V$.
+		\item For every non-zero vector, there is a unique linear combination in $B$ that results in that vector.
+	\end{enumerate}
+\end{myprop}
+\begin{myproof}
+	\begin{itemize}
+		\item i $\Rightarrow$ ii : We only need to show that $B$ spans $V$. Consider $\mathbf{x} \in V$. $B$ is maximal with respect to linear independence, meaning that $B \cup \{\mathbf{x}\}$ is linearly dependent i.e. there exists a finite subset $B_{\mathbf{x}} \subset B \cup \{\mathbf{x}\}$ that is linearly dependent
+		$$\sum_{\mathbf{v} \in B_{\mathbf{x}}} \alpha_{\mathbf{v}} \mathbf{v} = \mathbf{0} \quad , \quad \alpha_{\mathbf{v}} \neq 0 \text{ for some (at least 2) } \mathbf{v}$$
+		One of those $\mathbf{v}$ has to be $\mathbf{x}$, else $B_{\mathbf{x}}$ would be a proper subset of $B$ which is linearly independent.
+		$$ \sum_{\substack{\mathbf{v} \in B_{\mathbf{x}}\\ \mathbf{v}\neq \mathbf{x}}} \alpha_{\mathbf{v}} \mathbf{v} + \beta\mathbf{x} = \mathbf{0}$$
+		$\beta \neq 0$, else it would be a linear combination of vectors of $B$ which are linearly independent. Consequently,
+		$$\mathbf{x} = \sum_{\substack{\mathbf{v} \in B_{\mathbf{x}}\\ \mathbf{v}\neq \mathbf{x} }} -\frac{\alpha_{\mathbf{v}}}{\beta} \mathbf{v}$$
+		\item ii $\Rightarrow$ iii : Existence follows from "$B$ spans $V$". Only uniqueness needs to be proven; assume by contradiction that a vector $\mathbf{x} \neq \mathbf{0}$ admits two representations i.e. there is two finite subsets of $B$, $A_{\mathbf{x}} \enspace \& \enspace B_{\mathbf{x}}$, such that $x$ is linearly dependent on these subsets i.e.
+		$$ \mathbf{x} = \sum_{\mathbf{v} \in A_{\mathbf{x}}} \alpha_{\mathbf{v}} \mathbf{v} = \sum_{\mathbf{v} \in B_{\mathbf{x}}} \alpha_{\mathbf{v}} \mathbf{v}$$
+		Substracting one sum to the other, we obtain that $A_{\mathbf{x}} \cup B_{\mathbf{x}}$ is linearly dependent, whilst $B$ is linearly independent, a contradiction.
+		\item iii $\Rightarrow$ i : We have to show both linear independence and \textit{maximality} w.r.t. linear independence. We first show linear independence. Assume by contradiction that $B$ is linearly dependent i.e. there exists a finite subset $C \subset B$ such that
+		$$\sum_{\mathbf{v}\in C} \alpha_{\mathbf{v}} \mathbf{v} = 0 $$
+		$\alpha_{\mathbf{v}} \neq 0$ for some vector in $C$. Denote that vector by $\mathbf{y}$. Then, we have that
+		$$\mathbf{y} = \sum_{\substack{\mathbf{v} \in C \\ \mathbf{v} \neq \mathbf{y}}} -\frac{\alpha_{\mathbf{y}}}{\alpha_{\mathbf{v}}}\mathbf{v}$$
+		Vector $\mathbf{y}$ is linearly dependent on both $\{\mathbf{y}\}$ and $C \setminus \{\mathbf{y}\}$, a contradiction with uniqueness.\\
+		We now show \textit{maximality}. Because every vector $\mathbf{x}\in V$ admits a unique linear combination representation in $B$, $B \cup \{\mathbf{x}\}$ is linearly dependent. Thus $B$ can not be the proper subset of a linearly independent set.
+	\end{itemize}
+\end{myproof}
+\begin{mythm}{}{extendtobasis}
+	Every linearly independent set in a vector space can be extended into a Hamel basis. In particular, every nontrivial vector space ($X = \{\mathbf{0}\}$) possesses a basis.
+\end{mythm}
+\begin{myproof}
+	Let $V$ be a vector space and consider $A \subset V$ a linearly independent subset. Consider the collection $\mathcal{X}$ of linearly independent sets that contain $A$. Take as a partial ordering set inclusion $\subset$. For all chains in said collection, the union of the elements of the chain is an upper bound in $\mathcal{X}$. Applying \textit{Zorn's lemma}, there is at least one maximal element in the collection i.e. a set that is maximal with respect to linear independence and contains $A$. This set is a Hamel basis.
+\end{myproof}
+\begin{mycorollary}{Construction of a complement}
+	Let $X \subset V$ be a subset of vector space $V$ . As a consequence of theorem \ref{thm:extendtobasis} a basis $B$ of $X$ does exist. As a consequence of the same theorem, said basis can be extended to a basis $C$ of $V$. The subspace $Y$ generated by $C \setminus B$ is a complement of $X$ : indeed, as a consequence of l.i. of $B$ and $C \setminus B$, $X \cap Y = \{\mathbf{0}\}$, and trivially $X + Y = V$. Thus $X \oplus Y = V$
+\end{mycorollary}
+
+\begin{mythm}{}{reducetobasis}
+	Any generating set of a non-trivial vector space can be reduced to a basis.
+\end{mythm}
+\begin{myproof}
+	Let $V$ be a vector space and consider a generating subset of $V, \enskip C$. Consider the collection $\mathcal{Y}$ of linearly independent sets contained by $C$ and as a partial order on $\mathcal{Y}$ set inclusion. The rest of the proof is exactly like theorem \ref{thm:extendtobasis}'s proof.
+\end{myproof}
+
+\begin{mythm}{Dimension theorem}{dimensiontheorem}
+	Let $V$ be a vector space, $U$ a generating set of $V$, and $P \subset V$ an arbitrary linearly independent set. Then
+	$$ \# P \leq \# U$$
+\end{mythm}
+\begin{myproof}
+	We need to show that there exists an injection from $P$ to $U$: consider the class $\mathcal{G}$ of injections $g$ s.t.
+	\begin{enumerate}[label = \roman*.]
+		\item $\text{dom} \thinspace g \subset P, \quad \text{im} \thinspace g \subset U$
+		\item $(P \setminus \text{dom} \thinspace g ) \cup \text{im} \thinspace g$ is linearly independent
+	\end{enumerate}
+	$\mathcal{G}$ is non-empty : in order to see this, pick an arbitrary element $\mathbf{x} \in P$. Because $U$ is a generating set, there exists a finite set of vectors whose linear combination (with non-zero weights) results in $\mathbf{x}$. There must be a vector $\mathbf{x}'$ in this set which does not belong to the span of $P \setminus \{\mathbf{x}\}$, else $P$ would be linearly dependent.The mapping $\mathbf{x} \mapsto \mathbf{x}'$ belongs to $\mathcal{G}$.\\
+	Equip $\mathcal{G}$ with the following partial ordering :
+	$$g_1 \leq g_2 \iff \text{dom}\thinspace g_1 \subset \text{dom}\thinspace g_2 \thinspace \land \thinspace g_2\big|_{\text{dom}\thinspace g_1} = g_1 $$
+	Consider an arbitrary chain $\mathcal{H} \subset \mathcal{G}$ . Consider the union of injections $g \in \mathcal{H}$, $G$. It is well defined as we are considering a chain. It is an injection and respects condition i. Let $A$ be a finite subset of $(P \setminus \text{dom}\thinspace G) \cup \text{im}\thinspace G$,
+	$$A = A_1 \cup A_2, \quad A_1 \subset P \setminus \text{dom}\thinspace G, \quad A_2 \subset \text{im}\thinspace \text{G}$$
+	Because $A_2$ is finite, there exists a $g'$ such that $A_2 \subset \text{im}\thinspace g'$. Moreover,
+	$$A_1 \subset P \setminus \text{dom}\thinspace \bigcup\limits_{g \in G} g \subset P \setminus \text{dom}\thinspace g' \implies A = A_1 \cup A_2 \subset (P \setminus \text{dom}\thinspace g') \cup \text{im}\thinspace g'$$
+	i.e. $A$ is linearly independent. Thus $G$ is an upper bound of $\mathcal{H}$ in $\mathcal{G}$. By Zorn's lemma, $\mathcal{G}$ admits a maximum element, $f$. It only remains to show that $\text{dom}\thinspace f = P$. Assume by contradiction that $P \setminus \text{dom}\thinspace f \neq \emptyset$. It must be that $\text{im}\thinspace f \neq U$, else
+	$$ ( P \setminus \text{dom}\thinspace f ) \cup \text{im}\thinspace f = ( P \setminus \text{dom}\thinspace f ) \cup U$$
+	is linearly independent, which contradicts the fact that $U$ is a generating set. Thus $\text{im} \thinspace f$ is linearly independent and non-generating, but $U$ is, meaning there exists a $ \mathbf{v} \in U \setminus \text{im}\thinspace f$ such that $\text{im}\thinspace f \cup \mathbf{v}$ is linearly independent. Consider said $\mathbf{v}$ . Either $\mathbf{v}$ is linearly dependent or independent of $( P \setminus \text{dom}\thinspace f ) \cup \text{im}\thinspace f$ or independent of it. In the later case, choose an element from $P \setminus \text{dom}\thinspace f, \mathbf{u}$. Then $f_1 = f \cup \mathbf{u} \mapsto \mathbf{v}$ is a proper extension of $f$ in $\mathcal{G}$, which contradicts the maximality of $f$. Indeed, condition i is trivially satisfied, and, regarding ii,
+	$$(P \setminus \text{dom}\thinspace f_1) \cup \text{im}\thinspace f_1 = (P \setminus (\text{dom}\thinspace f \cup \{\mathbf{u}\})) \cup (\text{im}\thinspace f \cup \{\mathbf{v}\}) \subset (P \setminus \text{dom}\thinspace f) \cup (\text{im}\thinspace f \cup \{\mathbf{v}\})$$
+	, which is linearly independent. It only remains to consider the case in which $\mathbf{v} \text{ and } (P \setminus \text{dom}\thinspace f) \cup \text{im}\thinspace f$ are linearly dependent. In that case, $\mathbf{v} \in \text{span} (P \setminus \text{dom}\thinspace f) \cup \text{im}\thinspace f$ i.e. there exists a finite subset of $(P \setminus \text{dom}\thinspace f) \cup \text{im}\thinspace f, \text{ call it } B$, such that
+	$$\mathbf{v} = \sum_{\mathbf{x}\in B} \alpha_{\mathbf{x}} \mathbf{x}, \quad \alpha_{\mathbf{x}} \neq 0 \enskip \forall \mathbf{x} \in B$$
+	Moreover, because $(P \setminus \text{dom}\thinspace f) \cup \text{im}\thinspace f$ is linearly independent, that subset is unique. Because $\{\mathbf{v}\} \cup \text{im}\thinspace f$ is linearly independent, there must be a $\mathbf{u} \in P \setminus \text{dom}\thinspace f$ in $B$ . Consider again $f_1 = f \cup \mathbf{u} \mapsto \mathbf{v}$ . Because $B$ was unique and is not a subset of $(P \setminus (\text{dom}\thinspace f \cup \{\mathbf{u}\})) \cup \text{im}\thinspace f$, $(P \setminus (\text{dom}\thinspace f \cup \{\mathbf{u}\})) \cup \text{im}\thinspace f \cup \{\mathbf{v}\}$ is linearly independent, making $f_1$ a proper extension of $f$ in $\mathcal{G}$. This contradicts again the maximality of $f$. Thus it can not be that $P \setminus \text{dom}\thinspace f$ is non-empty, making $f$ an injection from $P$ to $U$.
+\end{myproof}
+\begin{mycorollary}{Dimension}
+	Every two bases of a space have the same cardinality. This allows us to introduce the \textbf{dimension} of a space, which is defined as the cardinality of a base of said space.
+\end{mycorollary}
+\begin{myeg}{}
+	\begin{enumerate} 
+		\item $\text{dim}\thinspace \mathbb{C}^n$ is equal to $n$ or $2^n$ depending of which field is chosen as scalars.
+	\end{enumerate}
+\end{myeg}
+
+
+\newpage
+\section{Linear transformations}\label{sec:lineartransformations}
+\subsection{Fundamental facts}\label{subsec:fundamentalfacts}
+Following the presentation of an algebraic structure is shown a function that respects its basic features. Linear transformations play this role for vector spaces.
+\begin{mydef}{Linear transformation}{lineartransformation}
+	Let $V$ and $W$ be two vector spaces, both over the same field $\mathbb{F}$. We say that a transformation $T : V \to W$ is ...
+	\begin{enumerate}[label = \roman*.]
+		\item $T$ is additive $\iff \forall \mathbf{x}, \mathbf{y} \in V, \enskip T(\mathbf{x}) + T(\mathbf{y}) = T(\mathbf{x} + \mathbf{y})$
+		\item $T$ is homogeneous $\iff \forall \alpha \in \mathbb{F}, \thinspace \mathbf{v} \in V,\enskip \alpha T(\mathbf{v}) = T(\alpha\mathbf{v})$
+	\end{enumerate}
+	A transformation that is both additive and homogeneous is called a \textbf{linear transformation}.
+\end{mydef}
+\begin{mycorollary}{}
+	$T(\mathbf{0}) = \mathbf{0}$. Indeed, $T(\mathbf{v}) = T(\mathbf{v + 0}) = T(\mathbf{v}) + T(\mathbf{0})$
+\end{mycorollary}
+
+Linear transformations correspond to homomorphisms in the context of vector spaces in the sense that they preserve the algebra.\\
+
+\begin{mystatement}\label{st:intromatrices}
+	There exists a "correspondence" between linear transformations in finite-dimensional spaces and matrices.
+\end{mystatement}
+\begin{mypseudoproof} 
+	Let $V, W$ be two vector spaces. Let $\{\mathbf{f}_1, ..., \mathbf{f}_n\}, \{\mathbf{g}_1, ..., \mathbf{g}_m\}$ be two bases of $V$ and $W$ respectively and consider $\mathbf{w} = T(\mathbf{v})$:
+	\begin{gather*} 
+		\mathbf{w} = T(\mathbf{v}) = T(\sum_{j=1}^{n} v_j \mathbf{f}_j) = \sum_{j=1}^{n} v_j T(\mathbf{f}_j)\\
+		T(\mathbf{f}_j) = \sum_{i=1}^{m} T_{ij} \mathbf{g}_i\\
+		\mathbf{w} = \sum_{j = 1}^{n} v_j (\sum_{i=1}^{m} T_{ij} \mathbf{g}_i) = \sum_{i=1}^{m} \sum_{j = 1}^{n} v_j T_{ij} \mathbf{g}_i\\
+	\end{gather*}
+	The $j_{th}$ component of $\mathbf{w}$ writes
+	$$w_i = \sum_{j=1}^{n} v_j T_{ij}$$
+	This leads naturally to the \textbf{matrix} respresentation of these mappings :
+	\begin{equation*} 
+		\begin{bmatrix} 
+			T_{11}& T_{12}& T_{13}& ... & T_{1n}\\
+			T_{21}& T_{22}& T_{23}& ... & T_{2n}\\
+			\vdots &  & & & \vdots\\
+			T_{m1}& T_{m2}& T_{m3}& ... & T_{mn}\\
+		\end{bmatrix}
+	\end{equation*}
+	, in which the vector $\mathbf{v}$ is multiplied by a row of the matrix $T_{ij}$ in order to obtain the \textit{entries} of $\mathbf{w}$. Notice that this representation of the linear transformation is basis-dependent in both the domain and the range.
+\end{mypseudoproof}
+\begin{mydef}{Range space \& Null space}{rangenull}
+	Let $T : V \to W$ be a linear transformation from vector space $V$ to vector space $W$. Consider the range of $T$ and the \textbf{kernel} of $T$, the subset of $V$ that is mapped to the zero vector of $W$ :
+	$$\text{Ker }T = \{\mathbf{v} \in V \enspace \mid \enspace T(\mathbf{v}) = \mathbf{0}\}$$
+	Both the range and the kernel of $T$ form subspaces of $W$ and $V$ respectively. They are called the \textbf{range space} and the \textbf{null space} and are denoted by $\mathcal{R}(T)$ and $\mathcal{N}(T)$.
+	\tcblower
+	The dimension of the range space is denoted by $r(T)$ and called \textbf{rank} of $T$. Similarly, the dimension of the null space is denoted by $n(T)$ and called \textbf{nullity} of $T$.
+\end{mydef}
+For the proposition that follows, remember that an \textit{homomorphism} is an \textit{algebra preserving} mapping. A \textit{monomorphism} is an injective homomorphism. Similary, an \textit{epimorphism} is a surjective homomorphism and an \textit{isomorphism} is a bijective homomorphism.
+\begin{myprop}{}{singletonkernel}
+	Let $T : V \to W$ be a linear transformation. Then $T$ is a monomorphism iff $\text{Ker } T = \{\mathbf{0}\}$
+\end{myprop}
+\begin{myproof}
+	\begin{enumerate}[label = \roman*.]
+		\item $\Rightarrow$ : This follows from injectivity and the corollary of definition \ref{def:lineartransformation} i.e. the zero vector of $V$ already maps to the zero vector of $W$.
+		\item $\Leftarrow$  : Consider two vectors that map to the same vector of $W$ :
+			$$T(\mathbf{v}) = T(\mathbf{v}') \iff T(\mathbf{v} - \mathbf{v}') = \mathbf{0} \iff \mathbf{v} - \mathbf{v}' = \mathbf{0} \iff \mathbf{v} = \mathbf{v}'$$
+	\end{enumerate}
+\end{myproof}
+\begin{mythm}{Rank theorem}{ranktheorem}
+	Let $T : V \to W$ be a linear transformation, where $V$ is \textit{finite-dimensional}. The nullity and rank add up to the dimension of the domain i.e.
+	$$\text{dim } V = r + n = \text{dim } \mathcal{R}(T) + \mathcal{N}(T)$$
+\end{mythm}
+\begin{myproof}
+	Consider a basis of $\mathcal{N}(T) , B = \{\mathbf{v}_1, ..., \mathbf{v}_n\}$. By theorem \ref{thm:extendtobasis}, it can be extended to a basis  $B'$ of $V$, $B' = \{\mathbf{v}_1, ..., \mathbf{v}_n, \mathbf{v}_{n+1}, ..., \mathbf{v}_{n+r}\}$. It only remains to show that $B'\setminus B = \{\mathbf{v}_{n+1}, ..., \mathbf{v}_{n+r}\}$ is a basis of $\mathcal{R}(T)$:
+	\begin{itemize}
+		\item The image of $B'\setminus B$ is linearly independent : Suppose by contradiction that for some $k$, $n+1 \leq k \leq n+r$,
+			$$T(\mathbf{v}_k) = \sum_{\substack{i=n+1\\ i\neq k}}^{n+r} \alpha_i T(\mathbf{v}_i) \quad , \quad \alpha_i \neq 0 \text{ for some } i$$
+		Then, by linearity of $T$,
+			$$\mathbf{0} = T(\sum_{\substack{i=n+1\\ i\neq k}}^{n+r} \alpha_i \mathbf{v}_i - \mathbf{v}_k) \iff \sum_{\substack{i=n+1\\ i\neq k}}^{n+r} \alpha_i \mathbf{v}_i - \mathbf{v}_k = x \in \text{Ker } T$$
+		Thus $x$ both belongs to the spans of $B$ and $B'\setminus B$, meaning there is two subsets of $B'$ that span $x$, which contradicts the linear independence of $B'$. Thus $B'\setminus B$ is linearly independent. \hfill \done
+	\item The image of $B'\setminus B$ spans the range of $T$ : Consider an element of the range space, $\mathbf{y}$. Since it is in the range space,
+		$$\mathbf{y}= T(\mathbf{x})\thinspace, \quad \mathbf{x} \in V \iff \mathbf{x} = \sum_{k=1}^{n+r} \alpha_k \mathbf{v}_k$$
+		Thus $\mathbf{y}$ writes
+			$$\mathbf{y} = T(\sum_{k=1}^{n+r} \alpha_k \mathbf{v}_k) = T(\sum_{k=1}^{n} \alpha_k \mathbf{v}_k) + T(\sum_{k=n+1}^{n+r} \alpha_k \mathbf{v}_k)$$
+		Since $\sum_{k=1}^{n} \alpha_k \mathbf{v}_k$ belongs to the span of $B$, it belongs to $\mathcal{N}(T)$. Thus $\mathbf{y}$ reduces to
+			$$\mathbf{y} = \sum_{k=n+1}^{n+r} \alpha_k T(\mathbf{v}_k)$$
+		i.e. $\mathbf{y}$ is linearly dependent of $B'\setminus B$. \hfill \done
+	\end{itemize}
+\end{myproof}
+The following corollary follows from proposition \ref{prop:singletonkernel} and theorem \ref{thm:ranktheorem}.
+\begin{mycorollary}{}
+	Let $V$ and $W$ be two finitely-dimensional vector spaces and $T : V \to W$ a linear transformation :
+	\begin{enumerate}[label = \roman*.]
+		\item $T$ is a monomorphism $\iff r(T) = \text{dim } V$
+		\item $T$ is an epimorphism $\iff r(T) = \text{dim } W$
+		\item $T$ is an isomorphism $\iff r(T) = \text{dim } W = \text{dim } V$
+	\end{enumerate}
+\end{mycorollary}
+\begin{myeg}{}
+	Let $\Omega \subset \mathbb{R}^2, \enskip \mathcal{P}^k(\Omega)$ be the space of polynomials with domain $\Omega$ and of degree $k$. Their dimension is $(k+1)\frac{k+2}{2}$\enskip\footnote{And not $k\frac{k+1}{2}$ as the book claims.} Consider the linear transformation
+	\begin{align*}
+		\Delta : \mathcal{P}^k({\Omega}) &\to \mathcal{P}^k({\Omega})\\
+		 f &\mapsto \partial_{xx} f + \partial_{yy} f
+	\end{align*}
+	known as Laplacian operator. Its null space is of dimension 4 : it is generated by $\{1, x, y, xy\}$. According to theorem \ref{thm:ranktheorem}, dim $\mathcal{R}(\Delta) = \frac{k+2}{2}(k+1) - 4$ .
+\end{myeg}
+\begin{myeg}{}\label{eg:projection}
+	Let $V = X \oplus Y$, and dim $X = n$, dim $ Y = m$. Consider the following map
+	\begin{align*}
+		\Pi_X : V &\to X\\
+			 \mathbf{v} &\mapsto \mathbf{x} \enspace \mid \enspace \mathbf{x} + \mathbf{y} = \mathbf{v}, \enskip \mathbf{x} \in X, \enskip \mathbf{y} \in Y
+	\end{align*}
+	This type of mapping is commonly known as a projection. Theorem \ref{thm:uniquerepresentation} tells us this is well defined (unique representation characterization of the direct sum). Moreover, this is a linear map : consider two vectors, $\mathbf{v} = \mathbf{x + y}, \mathbf{w = x' + y'}$ and two scalars $\alpha, \beta$:
+	$$\Pi_X(\alpha \mathbf{v} + \beta \mathbf{w}) = \Pi_X\big(\alpha ( \mathbf{x} + \mathbf{y}) + \beta (\mathbf{x}' + \mathbf{y}') \big) = \Pi_X\big(\alpha \mathbf{x} + \beta \mathbf{x}' + \alpha \mathbf{y} + \beta \mathbf{y}' \big) = \alpha \mathbf{x} + \beta \mathbf{x}' = \alpha \Pi_X(\mathbf{v}) + \beta \Pi_X(\mathbf{w})$$
+	Its null space and range space are $Y$ and $X$ respectively. By the rank theorem (\ref{thm:ranktheorem}), we conclude that dim $V = \text{dim } X + \text{dim } Y = n + m$.\\
+\end{myeg}
+\begin{mydef}{Isomorphic vector spaces}{isomorphic}
+	Two vector spaces $X, Y$ are said to be isomorphic iff there exists an isomorphism $\iota : X \to Y$ .
+\end{mydef}
+\begin{myeg}{}
+	Let $V$ be a finite-dimensional real vector space. Let $\{a_1, ..., a_n\}$ denote a basis of said vector space. Consider now $\mathbb{R}^n$ with the canonical basis $\{e_1, ..., e_n\}$. The following mapping
+	\begin{align*}
+		\iota : \mathbb{R}^n &\to V\\
+			\sum_{k=1}^{n} x_i e_i &\mapsto \sum_{k=1}^{n} x_i a_i
+	\end{align*}
+	is an isomorphism between both spaces. Thus \textit{every finite-dimensional real space is isomorphic to $\mathbb{R}^n$}. For instance, consider $\mathcal{P}^{66} (\mathbb{R})$ and $\mathcal{P}^{10} (\mathbb{R}^2)$. They are both isomorphic to $\mathbb{R}^{66}$.
+\end{myeg}
+\begin{myeg}{}
+	Let $V$ be a vector space and $X\subset V$ a subspace. Consider a complement $Y$ of $X$. Define the following mapping :
+	\begin{align*}
+		\iota : Y &\to {}^V\! / \! {}_{X}\\
+			 \mathbf{y} &\mapsto [\mathbf{y}] = \mathbf{y} + X
+	\end{align*}
+	, where ${}^V\! / \! {}_{X}$ is the quotient space (cf. example \ref{eg:quotientspace}). $\iota$ is linear, injective ( since $X \cap Y = \text{Ker }\iota = \{\mathbf{0}\}$) and is surjective (since $X + Y = V)$, making it an isomorphism.
+\end{myeg}
+\begin{mydef}{Projection}{projection}
+	A linear transformation of a vector space into itself, $T : V \to V$ is a projection iff
+	$T^2 := T \circ T = T$
+\end{mydef}
+\begin{myprop}{Direct sum characterization of projection}{projectiondirectsum}
+	Let $V$ be a vector space and $T$ a mapping of $V$ into itself. The following conditions are equivalent :
+	\begin{enumerate}[label = \roman*.]
+		\item $T$ is a projection
+		\item There exists subspaces $X, Y \enspace \mid \enspace X \oplus Y = V, \enskip T(\mathbf{v}) = \mathbf{x}, \enskip \text{ where } \mathbf{v} = \mathbf{x} + \mathbf{y}$ is the $X \oplus Y$ decomposition of $\mathbf{v}$
+	\end{enumerate}
+\end{myprop}
+\begin{myproof}
+	\begin{itemize}
+		\item i $\Rightarrow$ ii : Let $X = \mathcal{R}(T) , \enskip Y = \mathcal{N}(T)$ . $\forall \mathbf{v} \in V,$
+			$$\mathbf{v} = T(\mathbf{v}) + (\mathbf{v} - T(\mathbf{v})), \quad T(\mathbf{v}) \in \mathcal{R}(T) , \enskip \mathbf{v} - T(\mathbf{v}) \in \mathcal{N}(T) \implies X + Y = V$$
+			Moreover, consider $\mathbf{a} \in \mathcal{R}(T) \cap \mathcal{N}(T)$. There is some $\mathbf{b}\in V \enspace \mid \enspace T(\mathbf{b}) = \mathbf{a}$ . Because $T$ is a projection, $\mathbf{a} = T(\mathbf{b}) = T^2(\mathbf{b}) = \mathbf{0}$ \hfill \done
+		\item i $\Leftarrow$ ii : 
+			$$T^2(\mathbf{v}) = T^2(\mathbf{x} + \mathbf{y}) = T(\mathbf{x}) = T(\mathbf{x} + \mathbf{0}) = \mathbf{x} = T(\mathbf{v})$$
+			Linearity was proven in the second part of example \ref{eg:projection}.
+	\end{itemize}
+\end{myproof}
+\begin{myeg}{Linear transformations on quotient spaces}
+	Let $T : V  \to W$ be a linear transformation and $M \subset \mathcal{N}(T)$ a linear subspace.
+	$$\overline T : {}^V\! / \! {}_M \to W, \enskip \overline T([\mathbf{v}]) = T(\mathbf{v})$$
+	$\overline T$ is well-defined :
+	$$\mathbf{w} \in [\mathbf{v}] \iff \mathbf{w}-\mathbf{v} \in M \implies T(\mathbf{v} - \mathbf{w}) = \mathbf{0} \iff T(\mathbf{v}) = T(\mathbf{w})$$
+	Linearity of $\overline T$ follows from linearity of $T$.
+	If $M = \mathcal{N}(T) , \enskip \overline T$ becomes a monomorphism:
+	$$\overline T([\mathbf{v}]) = \overline T([\mathbf{w}]) \iff T(\mathbf{v}) = T(\mathbf{w}) \iff T(\mathbf{v}-\mathbf{w})=\mathbf{0} \iff \mathbf{v}-\mathbf{w}\in \mathcal{N}(T) \iff [\mathbf{v}] = [\mathbf{w}]$$
+	Consider now $V = X \oplus Y$ and the projection $\Pi : V \to Y$ . $\overline\Pi : {}^V\!/\!{}_{X} \to Y$ is surjective since $\Pi$ is. Thus $\overline \Pi$ is an isomorphism between $Y$ and ${}^V\!/\!{}_{X}$.
+\end{myeg}
+ 
+\subsection{Linear transformations and matrices}\label{subsec:lineartransformationsandmatrices}
+Recall from example \ref{eg:functionsontovectorspace} that the set of functions onto a vector space form a vector space themselves. Because a linear combination of linear transformations is also a linear transformation, the set of linear transformations from $X$ to $Y$ is a subspace of $X^Y$ and is denoted $L(X, Y)$ or $L(X)$ if $X = Y$. In latter case, $L(X)$ is closed under the composition operation $\circ : L(X) \times L(X) \to L(X)$. $\{X, +, *, \circ\}$ is an example of a structure called \textit{associative algebra}:
+\begin{mydef}{Linear algebra (associative algebra)}{associativealgebra}
+	A structure $\{V, \thinspace \mathbb{F}, +, *, \circ\}$ is a \textbf{linear algebra} iff
+	\begin{itemize}
+		\item $\{V, \thinspace\mathbb{F}, +, *\}$ is a vector space
+		\item $\{V, \circ\}$ is a semi-group
+		\item $\circ$ distributes over $+$:
+			\begin{gather*} 
+				(x+y)\circ z = x \circ z + y \circ z \\
+				z \circ (x + y) = z \circ x + z \circ y
+			\end{gather*}
+		\item $(\alpha*x) \circ y = \alpha*(x \circ y) = x \circ (\alpha*y)$
+	\end{itemize}
+	This structure is more commonly known as an \textit{associative algebra}, or without the associatiy (semi-group) axiom, an \textit{algebra over} $\mathbb{F}$. The 2 last axioms define a \textbf{bilinear} operation.
+\end{mydef}
+
+An alternative way of constructing isomorphisms is to consider a vector space $X$, a set $Y$ and a bijection $\gamma : X \to Y$. $Y$ can inherit the vector space algebra of $X$ through the bijection :
+\begin{align*} 
+	\mathbf{y}_1 + \mathbf{y}_2 &:= \gamma\big(\gamma^{-1}(\mathbf{y}_1) + \gamma^{-1}(\mathbf{y}_2)\big)\\
+	\alpha \mathbf{y} &:= \gamma\big(\alpha\gamma^{-1}(\mathbf{y})\big)
+\end{align*}
+Recall from statement \ref{st:intromatrices} that we've already defined in incomplete fashion a correspondence between linear transformation in finite-dimensional spaces and matrices. We complete now by equipping the space of matrices with the operations of the space of linear transformations:
+\begin{itemize}
+	\item Matrix addition:
+		Let $T : X \to Y, \enskip R : X \to Y$ two linear transformations, and S = T + R their sum. Let $\{\hat{\mathbf{x}}_1, ..., \hat{\mathbf{x}}_m\}$, $\{\hat{\mathbf{y}}_1, ..., \hat{\mathbf{y}}_n\}$ be bases of $X$ and $Y$ respectively. Then :
+		\begin{flalign*} 
+			S(\mathbf{v}) &= \sum_{\substack{i=1\\j=1}}^{n, m} v_j S_{ij} \hat{\mathbf{y}}_i \\
+			&= \sum_{\substack{i=1\\j=1}}^{n, m} v_j (T_{ij}+R_{ij})\hat{\mathbf{y}}_i \\
+			& \implies S_{ij} = T_{ij} + R_{ij}
+		\end{flalign*}
+	\item Scalar product:
+		Let $T : X \to Y$ a linear transformation and $S = \alpha T$. Let $\{\hat{\mathbf{x}}_1, ..., \hat{\mathbf{x}}_m\}$, $\{\hat{\mathbf{y}}_1, ..., \hat{\mathbf{y}}_n\}$ be bases of $X$ and $Y$ respectively. Then:
+		\begin{align*}
+			S(\mathbf{v}) &= \sum_{\substack{i=1\\j=1}}^{n, m} v_j S_{ij} \hat{\mathbf{y}}_i \\
+			&= \sum_{\substack{i=1\\j=1}}^{n, m} v_j \alpha T_{ij}\hat{\mathbf{y}}_i \\
+			& \implies S_{ij} = \alpha T_{ij}
+		\end{align*}
+	\item Matrix multiplication:
+		Let $T : X \to Y, \enskip R : Y \to Z$ be two linear transformations, and $S = R \circ T$ their composition. Let $\{\hat{\mathbf{x}}_1, ..., \hat{\mathbf{x}}_l\}$, $\{\hat{\mathbf{y}}_1, ..., \hat{\mathbf{y}}_m\}$ and $\{\hat{\mathbf{z}}_1, ..., \hat{\mathbf{z}}_n\}$ be three bases for $X, Y \enspace \& \enspace Z$ respectively. For $\mathbf{v} \in X, \enskip S(\mathbf{v})$ writes :
+		\begin{align*} 
+			S(\mathbf{v}) &= \sum_{\substack{k=1\\j=1}}^{l, n} v_j S_{kj} \hat{\mathbf{z}}_k \\
+			&= R(\sum_{\substack{i=1\\j=1}}^{m, l} T_{ij} v_j \hat{\mathbf{y}}_i) = \sum_{\substack{i=1\\j=1}}^{m, l} T_{ij}v_j (\sum_{k=1}^{n} R_{ki} \hat{\mathbf{z}}_k) = \sum_{\substack{j=1\\k=1}}^{l, n} v_j \big(\sum_{i=1}^m T_{ij}R_{ki}\big) \hat{\mathbf{z}}_k\\
+			& \implies S_{kj} = \sum_{i=1}^m T_{ij}R_{ki}
+		\end{align*}
+\end{itemize}
+According to this construction, for $n, m \in \mathbb{N}^*, \enskip \{\mathbb{F}^{m\times n}, \text{matrix addition}, \text{scalar multiplication}\}$ is a vector space, and if $m = n$, a linear algebra. Because this structure is isomorphic to its analog of linear transformations, all concepts and theorems derived for linear transformations have their natural equivalent in the context of matrices. For instance, the \textbf{rank of a matrix} $T_{ij}$ is the rank of the corresponding linear transformation $T$. Vice versa, concepts derived for matrices have their equivalent for linear transformations : the \textbf{column space} corresponds to the span of $\{T(\hat{\mathbf{e}}_1), ..., T(\hat{\mathbf{e}}_m)\}$, the column vectors of the matrix, where $\{\hat{\mathbf{e}}_1, ..., \hat{\mathbf{e}}_m\}$ is the basis associated to the matrix.
+\begin{myprop}{Rank of matrix is dimension of column space}{dimcolspace}
+	The rank of matrix $T_{ij} , \enskip i = 1, ..., m , \enskip j = 1, ..., n$ corresponds to its maximal number of independent column vectors.
+\end{myprop}
+\begin{myproof}
+	The column vectors of $T_{ij}$ correspond to $C = \{T(\hat{\mathbf{e}}_1), ..., T(\hat{\mathbf{e}}_m)\}$, \enskip where $\{\hat{\mathbf{e}}_1, ..., \hat{\mathbf{e}}_m\}$ is the basis associated to the matrix. $C$ is a generating set for $\mathcal{R}(T)$. By theorem \ref{thm:reducetobasis} there exists $B \subset C$ that is a basis\footnote{Since we're dealing with a finite basis using the Axiom of Choice is a bit of an overkill.}. This basis contains the maximal number of independent column vectors.
+\end{myproof}
+\begin{myeg}{Similar matrices}
+	Two matrices $A, B$ are similar iff $B = P^{-1} A P$, where $P$ is nonsingular.\\
+	Consider a subset of the column vectors of $B_{ij}$, $\{B(\hat{\mathbf{e}}_1), ..., B(\hat{\mathbf{e}}_{r(B)})\}$, such that it is a maximal linearly independent subset of the column vectors. By proposition \ref{prop:dimcolspace}, said subset is a basis of $\mathcal{R}(B)$. We argue that $C =\{P\big(B(\hat{\mathbf{e}}_1)\big), ..., P\big(B(\hat{\mathbf{e}}_{r(B)})\big)\}$ is a basis of $\mathcal{R}(A)$:
+	\begin{itemize}
+		\item $C$ is linearly independent : Because $P$ is injective, the image of l.i. vectors is linearly independent. \hfill \done
+		\item $B$ spans $\mathcal{R}(A)$ : Let $\mathbf{w} \in \mathcal{R}(A)$; there exists $\mathbf{x} \in \text{dom }A$ s.t.
+			\begin{gather*} 
+				A \mathbf{x} = \mathbf{w}\\
+				P^{-1} A \mathbf{x} = P^{-1} \mathbf{w} \implies B P^{-1} \mathbf{x} = P^{-1}\mathbf{w}\\
+				P^{-1} \mathbf{w} \in \mathcal{R}(B) \implies P^{-1} \mathbf{w} = \sum_{k=1}^{r(B)} \alpha_k \hat{\mathbf{e}}_k \implies \mathbf{w} = \sum_{k=1}^{r(B)} \alpha_k P\big(B(\hat{\mathbf{e}}_k)\big) \quad \done
+			\end{gather*}
+	\end{itemize}
+	Thus $r(A) = r(B)$. By the rank theorem and because the two domains are isomorphic, $n(A) = n(B)$.\\
+	In order to simplify things, consider the case in which $A$ and $B$ are linear transformations from an \textit{n}-dimensional space $V$ into itself and let $\{\hat{\mathbf{x}}_1, ..., \hat{\mathbf{x}}_n\}$ be the base in which $B$ is expressed:
+	\begin{gather*} 
+		B(\hat{\mathbf{x}}_j) = \sum_{i=1}^{n} B_{ij} \hat{\mathbf{x}}_i = P^{-1} A P \hat{\mathbf{x}}_j\\
+		A (P \hat{\mathbf{x}}_j) = \sum_{i=1}^{n} B_{ij} P \hat{\mathbf{x}}_i
+	\end{gather*}
+	In words, in the basis $\{P \hat{\mathbf{x}}_1, ..., P \hat{\mathbf{x}}_n\}$, $A$ admits the same representation as $B$ i.e. two similar matrices admit the same representation in different bases. Conversely, let $A$ and $B$ be two matrices that admit the same representation in different bases $\{y_1, ..., y_n\}$ and $\{x_1, ..., x_n\}$ respectively:
+	\begin{gather*} 
+		A(y_j) = \sum_{j=1}^{n} B_{ij} y_i \qquad B(x_j) = \sum_{j=1}^{n} B_{ij} x_i\\
+	\end{gather*}
+	Consider the linear mapping $P$ such that $P(x_l) = y_l, \enskip 1 \leq l \leq n$. This mapping is injective: let $\mathbf{v} \in \mathcal{N}(P)$
+	$$ \mathbf{0} = P(v) = P\big(\sum_{k=1}^{n} \alpha_k x_k\big) =\sum_{k=1}^{n} \alpha_k y_k \implies \forall k, \alpha_k = 0 \implies \mathbf{v} = \mathbf{0} $$
+	The rank theorem implies that this mapping is non-singular/bijective. We now show that $B$ and $P^{-1} A P$ are the same mapping : $\forall v \in V, v = \sum_{k=1}^{n} \beta_k x_k$ and
+	\begin{align*} 
+		B(v) &= \sum_{i, j = 1}^{n, n} \beta_j B_{ij} x_i\\
+		P^{-1} A P(v) &= P^{-1} A P\big(\sum_{k=1}^{n} \beta_k x_k\big) = P^{-1} A \big(\sum_{k=1}^{n} \beta_k y_k\big) = P^{-1} \big(\sum_{i, k=1}^{n, n} \beta_k B_{ik} y_i\big) = \sum_{i, k = 1}^{n, n} \beta_k B_{ik} x_i
+	\end{align*}
+	In summary, the action of $A$ and $B$ on the different subspaces generated by their respective bases was the same relatively to their own bases indexed in a particular way. We switched the two bases in order to obtain the same mapping. The conclusion is that two square matrices have the same representation in different bases iff they are similar.
+\end{myeg}
+\newpage
+\section{Algebraic duals}\label{sec:algebraicduals}
+\subsection{Algebraic dual space}\label{subsec:algebraicdualspace}
+\begin{mydef}{Functionals and algebraic dual of a space}{linearfunctionalsspace}
+	Let $V$ denote a vector space over a field $\mathbb{F}$. A \textbf{functional} is a mapping $f : V \to \mathbb{F}$.\\
+	Recall that $\mathbb{F}$ is a vector space over itself. Thus the space of functionals is a vector space. Because linear combinations of linear functions are linear, the space of linear functionals $L(V, \mathbb{F})$ is a subspace. It is called \textbf{algebraic dual} of \textit{V} and denoted $V^*$.
+\end{mydef}
+\begin{mystatement}
+	There is a "correspondence" between linear functionals and elements of $\mathbb{F}^n$.\footnote{The previous statement can be seen as a particular case of statement \ref{st:intromatrices}.}
+\end{mystatement}
+\begin{mypseudoproof}
+	Let $V$ be a \textit{n}-dimensional space with basis $\{\hat{\mathbf{e}}_1, ..., \hat{\mathbf{e}}_n\}$ . Consider an arbitrary linear functional, $f \in V^*$ :
+	$$f(\mathbf{v}) = f\big(\sum_{k=1}^{n} \alpha_k \hat{\mathbf{e}}_k\big) = \sum_{k=1}^{n} \alpha_k f(\hat{\mathbf{e}}_k) = \sum_{k=1}^{n} \alpha_k f_k$$
+	, where $f_k = f(\hat{\mathbf{e}}_k) \in \mathbb{F}$
+\end{mypseudoproof}
+We now proceed in constructing a basis of $V^*$: consider a basis of $V$, $\{\hat{\mathbf{e}}_1, ..., \hat{\mathbf{e}}_n\}$. Define the linear functionals $\mathbf{\hat{e}}_k^*$ by $\mathbf{\hat{e}}_k^*(\mathbf{\hat{e}}_j) = \delta_{kj}$ .
+\begin{myprop}{}{basisofdual}
+	$\{\mathbf{\hat{e}}_1^*, ..., \mathbf{\hat{e}}_n^*\}$ forms a basis of $V^*$
+\end{myprop}
+\begin{myproof}
+	\begin{itemize}
+		\item Linear independence : Assume a linear combination of $\{\mathbf{\hat{e}}_k^*\}_{k=1, ..., n}$ results in the zero functional:
+			$$ \forall \mathbf{v} \in V, \enskip \sum_{k=1}^{n} \alpha_k \mathbf{\hat{e}}_k^* (\mathbf{v}) = 0 $$
+			In particular, this is true for $\mathbf{\hat{e}}_j$
+			$$0 = \sum_{k=1}^{n} \alpha_k \mathbf{\hat{e}}_k^* (\mathbf{\hat{e}}_j) = \sum_{k=1}^{n} \alpha_k \delta_{kj} = \alpha_j \quad \done$$
+		\item Generating : Consider an arbitrary element of the algebraic dual, $f \in V^*$, and an arbitrary element of $V, \mathbf{v}$:
+		$$ f(\mathbf{v}) = \sum_{k=1}^{n} v_k f_k = \sum_{k=1}^{n} f_k \mathbf{\hat{e}}_k^*\big(\sum_{j=1}^{n} v_j \hat{\mathbf{e}}_j\big) = \sum_{k=1}^{n} f_k \mathbf{\hat{e}}_k^*(\mathbf{v})$$
+		i.e. $f = \sum_{k=1}^{n} f_k \mathbf{\hat{e}}_k^*$ \hfill \done
+	\end{itemize}
+\end{myproof}
+
+\end{document}
