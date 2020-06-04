@@ -1,0 +1,126 @@
+\title{\large Notes for chapter 1 of Applied Functional Analysis\\\huge Preliminaries}
+\date{\vspace{-5ex}}
+\input{C:/Users/mehdi/vimfiles/latexHeader_noteTaking.tex}
+\begin{document}
+\maketitle
+\begin{mydef}{Some types of relations}{relations}
+	A \textbf{relation} \textit{R} on $A$ can be seen as a subset of $A \times A$
+	$$x R y \iff (x, y) \in R \subset A \times A$$
+	\textit{R} on $A$ is said to be ...
+	\begin{itemize}
+		\item \textbf{Symmetric} iff $x R y \implies y R x$
+		\item \textbf{Anti-symmetric} iff $x R y \land y R x \implies x = y$
+		\item \textbf{Reflexive} iff $\forall x \in A, \enskip x R x$
+		\item \textbf{Transitive} iff $x R y, \enskip y R z \implies x R z$
+	\end{itemize}
+	\tcblower
+	A relation \textit{R} on \textit{A}  is said to be a \textbf{partial ordering} of A iff \textit{R} is ...
+	\begin{itemize}
+		\item Transitive
+		\item Reflexive
+		\item Anti-symmetric
+	\end{itemize}
+	A relation \textit{R} on \textit{A}  is said to be an \textbf{equivalence relation} on A iff \textit{R} is ...
+	\begin{itemize}
+		\item Transitive
+		\item Reflexive
+		\item Symmetric
+	\end{itemize}
+	Equivalence relations are frequently denoted by $\sim$ or $=$ \thinspace . Given an equivalence relation \tilde{} on $A$, the \textbf{equivalence class} of $x \in A$ is defined as follows
+	$$ [x] = \{y \in A \enspace \mid \enspace x \sim y\}$$
+	The collection of equivalence classes of \tilde{} on $A$ is denoted as ${}^A \! / \!_{\sim}$ and called \textbf{quotient set}.
+\end{mydef}
+
+\begin{mydef}{Binary operation}{binaryoperation}
+	A \textbf{binary operation} $*$ on set $A$ is a function
+	\begin{align*}
+		f : A \times A &\to A\\
+			 (a, b) &\mapsto a * b
+	\end{align*}
+	A subset $E \subset A$ is said to be \textit{closed under *} iff $a, b \in E \implies a * b \in E$
+	\tcblower	
+	$*$ is said to be ...
+	\begin{itemize}
+		\item \textbf{Associative} iff $\forall a, b, c \in A$
+			$$(a * b) * c = a * (b * c)$$
+		\item \textbf{Commutative} iff $\forall a, b \in A$
+			$$a * b = b * a$$
+	\end{itemize}
+\end{mydef}
+
+\begin{mydef}{Groupoids, Semi-groups, monoids \& Groups}{basicalgebras}
+	Let $G$ be a set and $*$ a binary operation on said set. $\{G, *\}$ is said to be ...
+	\begin{itemize}
+		\item ... a \textbf{groupoid}.
+		\item ... a \textbf{semi-group} iff $*$ is associative.
+		\item ... a \textbf{monoid} iff it is a semi-group and $*$ has an identity element : $$\exists e \in G \enspace \mid \enspace \forall x \in G, \enskip x * e = e * x = x$$
+		\item ... a \textbf{group} iff it is a monoid and each element admits an inverse element (relative to $*$) : $$\forall x, \enspace \exists x^{-1} \in G \enspace \mid \enspace x * x^{-1} = e$$
+	\end{itemize}
+	\tcblower
+	If, additionally, $*$ is commutative, the group is said to be \textit{Abelian}. Notice that in general you can define a group with only left-identity and left-inverse, and right-identity/inverse will follow. For a monoid, you can not stop at defining left-identity.
+\end{mydef}
+ 
+\begin{mydef}{Ring}{ring}
+	A \textbf{ring} is a set $R$ together with two binary operations, $+$ \& $\cdot$, such that
+	\begin{itemize}
+		\item $(F, +)$ forms an Abelian group with identity element 0
+		\item $(F, \cdot)$ forms a monoid with identity element 1
+		\item Operation $\cdot$ distributes (left \& right) over $+$
+	\end{itemize}
+	If additianally $\cdot$ is commutative the ring itself is said to be commutative.
+\end{mydef}
+
+\begin{mydef}{Field}{field}
+	A \textbf{field} is a set $F$ together with two binary operations, $+$ \& $\cdot$, such that
+	\begin{itemize}
+		\item $(F, +)$ forms an Abelian group with identity element 0
+		\item $(F\setminus \{0\}, \cdot)$ forms an Abelian group with identity element 1
+		\item Operation $\cdot$ distributes (left \& right) over $+$
+	\end{itemize}
+\end{mydef}
+
+\begin{myprop}{Algebraic properties of the real numbers}{algebraicpropertiesrealnumbers}
+	\begin{enumerate}[label = \roman*.]
+		\item $\{\mathbb{ \mathbb{R}, \cdot, +}\}$ is a field
+		\item $\leq$ is a total/connex ordering of $\mathbb{R}$
+		\item $\mathbb{R}$ is order-complete under $\leq$
+		\item $\leq$ is compatible with the field structure of $\mathbb{R}$ :
+			\begin{itemize}
+				\item $x \leq y \implies x + z \leq y + z$
+				\item $x \geq 0 \land y \geq 0 \implies x \cdot y \geq 0$
+			\end{itemize}
+	\end{enumerate}
+\end{myprop}
+
+\begin{mydef}{Limit of sequence}{limit}
+	Let \textit{X} be a topological space. A sequence $s : \mathbb{N} \to X $ has \textbf{limit} \textit{l} iff
+	$$\forall M \in \mathcal{F}_l, \enspace \exists N \in \mathbb{N} \enspace \mid \enspace n \geq N \implies x_n \in M$$
+\end{mydef}
+
+\begin{mydef}{Limit of a function at a point}{limitoffunction}
+	Let $X, Y$ be two topological spaces. A function $f : X \to Y$ has \textbf{limit} \textit{l} at the accumulation point $x_0$ iff for all neighborhoods of \textit{l}, there exists a neighborhood of $x_0$ such that the image of the neighborhood of $x_0$ is contained in the neighborhood of \textit{l} . Mathematically,
+	$$\lim_{x\to x_0} f(x) = l \iff \forall N \in \mathcal{F}_l, \enskip \exists M \in \mathcal{F}_{x_0} \enspace \mid \enspace f(M) \subset N$$
+	If $x_0$ is not an accumulation point, there exists a neighborhood whose image is a singleton or the empty set, which will trivially satisfy the requirement.
+\end{mydef}
+\begin{myremark} 
+	A sequence converging to some limit can be seen as a special case of \ref{def:limitoffunction} with $\mathbb{N}$ equipped with the \textit{right order topology}.
+\end{myremark}
+\begin{mydef}{Continuity}{continuity}
+	Let $X, Y$ be two topological spaces. A function $f : X \to Y$ is \textbf{continuous} at the accumulation point $x_0 \in X$ iff the limit of the function at $x_0$ is equal to the value of the function at said point. Mathematically,
+	$$ f \text{ is continuous at } x_0 \iff \lim_{x \to x_0} f(x) = f(x_0)$$
+	$f$ is said to be \textit{globally continuous} iff it is continuous at every point in $A$
+\end{mydef}
+\begin{mydef}{Derivative}{derivative}
+	Let $x_0 \in A \subset \mathbb{R}$ an accumulation point. A real number $f'(x_0)$ is said to be the \textbf{derivative} of $f$ at $x_0$ iff
+	$$f'(x_0) = \lim_{x \to x_0} \frac{f(x) - f(x_0)}{x - x_0}$$
+	If $f'(a)$ exists, the function is \textit{differentiable at a}. If it is differentiable at each point of $A$, the function is \textit{differentiable on A}\\[1mm]
+	\textbf{Some reads about the definition at an accumulation point:}
+	\begin{itemize}
+		\item \href{https://math.stackexchange.com/questions/3251335/non-uniqueness-of-derivative-at-an-accumulation-point}{Non-unicity of derivative at accumulation points in higher dimensions}
+		\item \href{https://math.stackexchange.com/a/161934/335693}{Linear approximation in some neighborhood}
+	\end{itemize}
+\end{mydef}
+
+
+
+\end{document}
